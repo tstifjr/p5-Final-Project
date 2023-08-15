@@ -6,6 +6,9 @@ from app import app
 from config import db
 from models import User
 
+
+# tjstifter: qweqwe
+# tesj20: take22
 if __name__ == "__main__":
     with app.app_context():
         print('...Deleting Users')

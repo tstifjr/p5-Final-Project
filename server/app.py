@@ -47,7 +47,7 @@ def login():
     user = User.query.filter_by(username = username).first()
 
     if not user:
-        return make_response({'error' : f'User: {username} not found'})
+        return make_response({'error' : f'User: {username} not found'}, 404)
 
     if user.authenticate(password):
         return make_response(user.to_dict(only = ('username',)))
