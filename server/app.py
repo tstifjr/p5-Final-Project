@@ -29,8 +29,10 @@ class Users(Resource):
         return make_response(new_user.to_dict(only=('username',)), 201)
     
 api.add_resource(Users, '/users')
-
 class UserById(Resource):
+    def get(self):
+        pass
+
     def patch(self):
         pass
 
@@ -38,7 +40,29 @@ class UserById(Resource):
         pass
 
 api.add_resource(UserById, '/users/<int:id>')
+class Squares(Resource):
+    def get(self):
+        pass
 
+    def post(self):
+        pass
+
+api.add_resource(Squares, '/squares')
+
+class SquaresById(Resource):
+    def get(self):
+        pass
+
+    def patch(self):
+        pass
+
+    def delete(self):
+        pass
+
+api.add_resource(SquaresById, '/squares/<int:id>')
+
+
+###Individual Views
 #Login view
 @app.route('/login', methods = ["POST"])
 def login():
