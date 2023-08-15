@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import LoginSignup from './LoginSignup'
 
 function Home() {
     const [obj, setObj] = useState(null)
@@ -19,8 +20,9 @@ function Home() {
 
     return (
         <div className='App'>
-            Home
+            This is the Homepage
             <p>{obj && obj['message']}</p>
+            <LoginSignup />
         </div>
 
     )

@@ -1,10 +1,8 @@
-from flask import Flask, make_response, request
-from flask_cors import CORS
-from flask_restful import Resource, Api
+from flask import make_response, request
+from flask_restful import Resource
 
-app = Flask(__name__)
-
-api=Api(app)
+from config import app, db, api
+from models import User
 
 @app.route('/login', methods = ["POST"])
 def login():
