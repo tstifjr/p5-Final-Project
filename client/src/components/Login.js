@@ -8,6 +8,7 @@ import {UserContext} from '../context/user'
 function Login() {
     const [message, setMessage] = useState(null)
     const {user, setUser} = useContext(UserContext)
+    console.log(user)
     const history = useHistory()
     const formSchema = yup.object().shape({
         username: yup.string().required("Must enter a Name").min(6),
@@ -31,7 +32,7 @@ function Login() {
                             user => {
                                 setUser(user)
                                 setMessage(null)
-                                history.push('/')
+                                history.push('/profile')
                             })
                     }
                     else {
