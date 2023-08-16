@@ -26,7 +26,7 @@ class Users(Resource):
         db.session.add(new_user)
         db.session.commit()
 
-        return make_response(new_user.to_dict(only=('username',)), 201)
+        return make_response(new_user.to_dict(), 201)
     
 api.add_resource(Users, '/users')
 class UserById(Resource):
@@ -89,7 +89,7 @@ def login():
 
     if user.authenticate(password):
         session['user_id'] = user.id
-        return make_response(user.to_dict(only = ('username',)))
+        return make_response(user.to_dict(rules = ('-_password_hash',)))
     else:
         return make_response({'error' : "Password is inccorect"}, 404)
 
@@ -104,7 +104,7 @@ def logout():
 def check_session():
     user = User.query.filter(User.id == session.get('user_id')).first()
     if user:
-        return make_response(user.to_dict(only=('username',)))
+        return make_response(user.to_dict())
     else:
         return make_response({'message': 'Unauthorized'}, 401)
 

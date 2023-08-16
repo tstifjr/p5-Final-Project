@@ -7,6 +7,7 @@ import {UserContext} from '../context/user'
 
 function Signup() {
     const {user, setUser} = useContext(UserContext)
+    console.log(user)
     const history = useHistory()
     const formSchema = yup.object().shape({
         username: yup.string().required("Must enter a Name").min(6),
