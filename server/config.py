@@ -22,4 +22,6 @@ db.init_app(app)
 api=Api(app)
 bcrypt=Bcrypt(app)
 
+app.secret_key = b'\x9b\x99\xec\xd2N@,BG|.\xfd+\xa8\xad\x1f'
+
 CORS(app)

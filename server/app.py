@@ -1,4 +1,4 @@
-from flask import make_response, request
+from flask import make_response, request, session
 from flask_restful import Resource
 
 from config import app, db, api
@@ -88,14 +88,25 @@ def login():
         return make_response({'error' : f'User: {username} not found'}, 404)
 
     if user.authenticate(password):
+        session['user_id'] = user.id
         return make_response(user.to_dict(only = ('username',)))
     else:
         return make_response({'error' : "Password is inccorect"}, 404)
 
-# @app.route('/index')
-# def index():
-#     return make_response({"message" : "welcome to my app"})
+#Logout view
+@app.route('/logout', methods = ["DELETE"])
+def logout():
+    session['user_id'] = None
+    return make_response({}, 204)
 
+#check session view
+@app.route('/checksession')
+def check_session():
+    user = User.query.filter(User.id == session.get('user_id')).first()
+    if user:
+        return make_response(user.to_dict(only=('username',)))
+    else:
+        return make_response({'message': 'Unauthorized'}, 401)
 
 
 if __name__ == '__main__':
