@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useHistory, Link } from 'react-router-dom'
 
+import {UserContext} from '../context/user'
+
 function Signup() {
-    const [name, setName] = useState('')
+    const {user, setUser} = useContext(UserContext)
     const history = useHistory()
     const formSchema = yup.object().shape({
         username: yup.string().required("Must enter a Name").min(6),
@@ -25,8 +27,8 @@ function Signup() {
                 r => {
                     if (r.ok) {
                         r.json().then(
-                            data => {
-                                console.log(data)
+                            new_user => {
+                                console.log(`welcome ${new_user}`)
                                 history.push('/')
                             }
                         )

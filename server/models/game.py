@@ -13,7 +13,7 @@ class Game(db.Model, SerializerMixin):
     round = db.Column(db.Integer)
     win_team = db.Column(db.String)
     lose_team = db.Column(db.String)
-    square_id = db.Column(db.Interger, db.ForeignKey('squares.id'))
+    square_id = db.Column(db.Integer, db.ForeignKey('squares.id'))
 
     def __repr__(self):
         return f'<Game {self.id} : Score: {self.win_score} : {self.lose_score}>'

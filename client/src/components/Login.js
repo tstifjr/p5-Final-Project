@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useContext } from 'react'
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useHistory, Link } from 'react-router-dom'
 
+import {UserContext} from '../context/user'
+
 function Login() {
     const [message, setMessage] = useState(null)
-    const [username, setUsername] = useState(null)
+    const {user, setUser} = useContext(UserContext)
     const history = useHistory()
     const formSchema = yup.object().shape({
         username: yup.string().required("Must enter a Name").min(6),
@@ -26,8 +28,8 @@ function Login() {
                 r => {
                     if (r.ok) {
                         r.json().then(
-                            data => {
-                                setUsername(data)
+                            user => {
+                                setUser(user)
                                 setMessage(null)
                                 history.push('/')
                             })
@@ -36,7 +38,7 @@ function Login() {
                         r.json().then(
                             data => {
                                 setMessage(data)
-                                setUsername(null)
+                                setUser(null)
                             })
                     }
                 }
@@ -49,7 +51,7 @@ function Login() {
             <Link to='/signup'>Click Here To Signup</Link>
             <div >Login Page</div>
             {message && <p>{message['error']}</p>}
-            {username && <p> Welcome {username.username}</p>}
+            {user && <p> Welcome {user.username}</p>}
             <form onSubmit={formik.handleSubmit}>
                 <label htmlFor='username'>username: </label>
                 <input
