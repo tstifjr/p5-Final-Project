@@ -61,6 +61,20 @@ class SquaresById(Resource):
 
 api.add_resource(SquaresById, '/squares/<int:id>')
 
+# class Games(Resource):
+#     def get(self):
+#         pass
+
+#     def post(self):
+#         pass
+
+# app.add_resource(Games, '/games')
+
+# class GameById(Resource):
+#     def get(self):
+#         pass
+
+# app.add_resource(GameById, '/games/<int:id>')
 
 ###Individual Views
 #Login view

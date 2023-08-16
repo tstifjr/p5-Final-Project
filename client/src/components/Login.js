@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 
 function Login() {
     const [message, setMessage] = useState(null)
@@ -45,7 +45,9 @@ function Login() {
     });
     return (
         <div className='App'>
-            <div >Login</div>
+            {/* Add Login Option */}
+            <Link to='/signup'>Click Here To Signup</Link>
+            <div >Login Page</div>
             {message && <p>{message['error']}</p>}
             {username && <p> Welcome {username.username}</p>}
             <form onSubmit={formik.handleSubmit}>
