@@ -17,14 +17,12 @@ class User(db.Model, SerializerMixin):
     
     @password_hash.setter
     def password_hash(self, new_password):
-        enc_new_password = new_password.encode('utf-8')
-        encrypted_hash = bcrypt.generate_password_hash(enc_new_password)
-        hash_password_str = encrypted_hash.decode('utf-8')
-        self._password_hash = hash_password_str
+        encrypted_hashword = bcrypt.generate_password_hash(new_password.encode('utf-8'))
+        hashword_str = encrypted_hashword.decode('utf-8')
+        self._password_hash = hashword_str
 
     def authenticate(self, password):
-        enc_password = password.encode('utf-8')
-        return bcrypt.check_password_hash(self._password_hash, enc_password)
+        return bcrypt.check_password_hash(self._password_hash, password.encode('utf-8'))
 
     def __repr__(self):
         return f'<User {self.id}: {self.username}>'

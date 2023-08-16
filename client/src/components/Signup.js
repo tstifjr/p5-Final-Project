@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 
 function Signup() {
     const [name, setName] = useState('')
@@ -36,7 +36,11 @@ function Signup() {
         },
     });
     return (
-        <div className='App'>Signup
+        <div className='App'>
+        {/* Add Login Option */}
+        <Link to= '/login'>Click Here To Login</Link>
+        <div>Sign Up Page</div>
+        {/* Form JSX */}
             <form onSubmit={formik.handleSubmit}>
                 <label htmlFor='username'>username: </label>
                 <input
