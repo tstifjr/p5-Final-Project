@@ -2,24 +2,23 @@ from flask import make_response, request, session
 from flask_restful import Resource
 
 from config import app, db, api
-from models import User
+from models import User, Game, Square
 
-#User RESTful Resources
+##### Restful Routes
 class Users(Resource):
     def get(self):
-        pass
+        users = [user.to_dict() for user in User.query.all()]
+        return make_response(users)
 
     def post(self):
         data = request.get_json()
-        username, password = data.values()
 
-        # check for available name...
-        check_name = User.query.filter_by(username = username).first()
+        check_name = User.query.filter_by(username = data.get('username')).first()
         if check_name :
             return make_response({'error' : 'Sorry, username is already taken'}, 404)
         
         try:
-            new_user = User(username = username, password_hash = password)
+            new_user = User(username = data['username'], password_hash = data['password'])
         except Exception as e:
             return make_response({'error' : "Error is: "+ str(e)}, 404)
         
@@ -29,54 +28,125 @@ class Users(Resource):
         return make_response(new_user.to_dict(), 201)
     
 api.add_resource(Users, '/users')
+
 class UserById(Resource):
-    def get(self):
-        pass
+    def get(self, id):
+        user = User.query.filter_by(id=id).first()
+        
+        if user:
+            return make_response(user.to_dict())
+        else:
+            return make_response({"error" : "no user exists"}, 404)
 
-    def patch(self):
-        pass
+    # def patch(self, id):
+    #     pass
 
-    def delete(self):
-        pass
+    def delete(self, id):
+        user = User.query.filter_by(id=id).first()
+        if user:
+            db.session.delete(user)
+            db.session.commit()
+            return make_response({}, 204)
+        else:
+            return make_response({"error":"invalid user: Does not exist"}, 404)
 
 api.add_resource(UserById, '/users/<int:id>')
+
 class Squares(Resource):
     def get(self):
-        pass
+        all_squares = [square.to_dict() for square in Square.query.all()]
+        return make_response(all_squares)
 
     def post(self):
-        pass
+        data = request.get_json()
+        check_square = Square.query.filter(Square.board_pos == data.get('board_pos')).first()
+
+        
+        if check_square:
+            return make_response({"error": "this tile was already selected by someone"}, 404)
+        
+        try:
+            new_square = Square(board_pos = data['board_pos'], user_id = data['user_id'])
+        except Exception as e:
+            return make_response({"error" : f"invalid request: {str(e)} "}, 404)
+        
+        db.session.add(new_square)
+        db.session.commit()
+        return make_response(new_square.to_dict())
 
 api.add_resource(Squares, '/squares')
 
 class SquaresById(Resource):
-    def get(self):
-        pass
+    def get(self, id):
+        square = Square.query.filter_by(id=id).first()
+        
+        if square:
+            return make_response(square.to_dict())
+        else:
+            return make_response({"error" : "no square exists"}, 404)
 
-    def patch(self):
-        pass
+    def patch(self, id):
+        square = Square.query.filter_by(id=id).first()
+        data = request.get_json()
+        if not square :
+            return make_response({"error" : "no square exists"}, 404)
+        
+        try:
+            for attr in data:
+                setattr(square, attr, data[attr])
+        except Exception as e:
+            return make_response({"error" : f"invalid request: {str(e)} "}, 404)
 
-    def delete(self):
-        pass
+        db.session.commit()
+        return make_response(square.to_dict())
+
+    def delete(self, id):
+        square = Square.query.filter_by(id=id).first()
+        if square:
+            db.session.delete(square)
+            db.session.commit()
+            return make_response({}, 204)
+        else:
+            return make_response({"error":"invalid square: Does not exist"}, 404)
 
 api.add_resource(SquaresById, '/squares/<int:id>')
 
-# class Games(Resource):
-#     def get(self):
-#         pass
+class Games(Resource):
+    def get(self):
+        games = [game.to_dict() for game in Game.query.all()]
+        return make_response(games)
+    
+    def post(self):
+        data = request.get_json()
+        try:
+            new_game = Game(win_score = data['win_score'], 
+                            lose_score = data['lose_score'], 
+                            round = data['round'], 
+                            win_team = data['win_team'], 
+                            lose_team = data['lose_team'],
+                            square_id = data['square_id'])
+        except Exception as e:
+            return make_response({"error" : f"invalid request: {str(e)} "}, 404)
+        
+        db.session.add(new_game)
+        db.session.commit()
+        return make_response(new_game.to_dict())
 
-#     def post(self):
-#         pass
+api.add_resource(Games, '/games')
 
-# app.add_resource(Games, '/games')
+class GameById(Resource):
+    def get(self, id):
+        game = Game.query.filter_by(id=id).first()
+        
+        if game:
+            return make_response(game.to_dict())
+        else:
+            return make_response({"error" : "no game exists"}, 404)
 
-# class GameById(Resource):
-#     def get(self):
-#         pass
+api.add_resource(GameById, '/games/<int:id>')
 
-# app.add_resource(GameById, '/games/<int:id>')
 
-###Individual Views
+###Individual Views#########
 #Login view
 @app.route('/login', methods = ["POST"])
 def login():
