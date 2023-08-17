@@ -10,6 +10,7 @@ import Profile from './Profile';
 import { UserContext } from '../context/user';
 import NavHead from './NavHead';
 import Board from './Board'
+import LeaderBoard from './LeaderBoard';
 
 function App() {
   const { user, setUser } = useContext(UserContext)
@@ -43,7 +44,6 @@ function App() {
       })
   }, [setUser])
 
-  console.log(user)
   return (
     <>
 
@@ -56,9 +56,9 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route path="/login"> <Login /> </Route>
         <Route path="/signup"> <Signup /> </Route>
-        {/* <Route path="/enter"><LoginSignup /></Route> */}
         <Route path="/profile" component={Profile} />
-        <Route path="/board" component ={Board} />
+        <Route path="/boardmanager" component ={Board} />
+        <Route path="/leaderboard" component = {LeaderBoard}/>
 
 
         <Route path="*"><NotFound /></Route>

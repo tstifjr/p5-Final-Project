@@ -7,10 +7,18 @@ from config import db, bcrypt
 class User(db.Model, SerializerMixin):
     __tablename__ = "users"
 
-    serialize_rules = ('-_password_hash',)
+    serialize_rules = ('-_password_hash', '-squares.user', '-squares.games')
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String)
     _password_hash = db.Column(db.String, nullable=False)
+
+    squares = db.relationship('Square', back_populates='user', cascade = "all, delete-orphan")
+    _games = association_proxy('squares', 'games')
+    
+    @property
+    def games(self):
+        list = [l for l in self._games if l != []]
+        return [el for item in list for el in item]
 
     @property
     def password_hash(self):
