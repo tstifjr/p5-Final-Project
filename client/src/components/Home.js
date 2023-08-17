@@ -1,17 +1,18 @@
 import React, { useEffect, useContext } from 'react'
-import LoginSignup from './LoginSignup'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Link } from 'react-router-dom'
 import {UserContext} from '../context/user'
 function Home() {
     const {user, setUser} = useContext(UserContext)
-    console.log(user)
+    // console.log(user)
 
 
     return (
         <div className='App'>
-
             This is the Homepage
-            <LoginSignup />
+            <Link to="/profile">Profile Page</Link>
+            <Link to="/boardmanager">Board Page</Link>
+            <Link to='/leaderboard'>LeaderBoard Page</Link>
+            <Link to='/boardviewer'>Let's Play Page</Link>
         </div>
 
     )
