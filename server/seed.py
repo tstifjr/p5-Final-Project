@@ -98,17 +98,18 @@ if __name__ == "__main__":
         print("...seeding games")
         game_list = []
         
-        for i in range(1,21):
+        for i in range(1,41):
             rand_round = random.choice([64, 32, 16, 8, 4, 2])
             rand_teams = random.sample(team_list, 2)
             
             at_half = half_sim()
-            rand_sq = random.choice(squares_list)
-            win_score = max([at_half.home_score, at_half.away_score])
-            lose_score = min([at_half.home_score, at_half.away_score])
+            # rand_sq = random.choice(squares_list)
+            # win_score = max([at_half.home_score, at_half.away_score])
+            # lose_score = min([at_half.home_score, at_half.away_score])
             
-            game1 = Game(round = rand_round, win_team = rand_teams[0], lose_team = rand_teams[1], square_id = rand_sq.id, win_score = win_score, lose_score = lose_score)
+            # game1 = Game(round = rand_round, win_team = rand_teams[0], lose_team = rand_teams[1], square_id = rand_sq.id, win_score = win_score, lose_score = lose_score)
             
+            # game_list.append(game1)
             final = half_sim(at_half.home_score, at_half.away_score)
             rand_sq = random.choice(squares_list)
             win_score = max([final.home_score, final.away_score])
@@ -116,7 +117,7 @@ if __name__ == "__main__":
 
             game2 = Game(round = rand_round, win_team = rand_teams[0], lose_team = rand_teams[1], square_id = rand_sq.id, win_score = win_score, lose_score = lose_score)
 
-            game_list.extend([game1, game2])
+            game_list.append(game2)
 
         db.session.add_all(game_list)
         db.session.commit()

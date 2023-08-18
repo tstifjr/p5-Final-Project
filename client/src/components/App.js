@@ -39,26 +39,28 @@ function App() {
         else {
           r.json().then(message => {
             console.log(message)
+            history.push("/login")
           })
         }
       })
-  }, [setUser])
+  }, [setUser, history])
 
   return (
     <>
 
       {user ? <>
-        <NavHead handleLogout={handleLogout}/>
+        <NavHead handleLogout={handleLogout} />
       </> :
-      <></>}
+        <></>}
 
       <Switch>
         <Route exact path="/" component={Home} />
         <Route path="/login"> <Login /> </Route>
         <Route path="/signup"> <Signup /> </Route>
-        <Route path="/profile" component={Profile} />
-        <Route path="/boardmanager" component ={Board} />
-        <Route path="/leaderboard" component = {LeaderBoard}/>
+        <Route path="/profile/:userId" component={Profile} />
+        <Route path="/boardmanager" component={Board} />
+        <Route path="/leaderboard" component={LeaderBoard} />
+        {/* add boardview */}
 
 
         <Route path="*"><NotFound /></Route>

@@ -8,7 +8,7 @@ import {UserContext} from '../context/user'
 function Login() {
     const [message, setMessage] = useState(null)
     const {user, setUser} = useContext(UserContext)
-    console.log(user)
+    // console.log(user)
     const history = useHistory()
     const formSchema = yup.object().shape({
         username: yup.string().required("Must enter a Name").min(6),
@@ -32,7 +32,7 @@ function Login() {
                             user => {
                                 setUser(user)
                                 setMessage(null)
-                                history.push('/profile')
+                                history.push('/')
                             })
                     }
                     else {
@@ -56,6 +56,7 @@ function Login() {
             <form onSubmit={formik.handleSubmit}>
                 <label htmlFor='username'>username: </label>
                 <input
+                    placeholder='username...'
                     id='username'
                     name="username"
                     type='text'
@@ -67,6 +68,7 @@ function Login() {
                 <br></br>
                 <label htmlFor='password'>password: </label>
                 <input
+                    placeholder='password...'
                     id='password'
                     name="password"
                     type='password'

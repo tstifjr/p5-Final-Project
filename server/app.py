@@ -34,7 +34,7 @@ class UserById(Resource):
         user = User.query.filter_by(id=id).first()
         
         if user:
-            return make_response(user.to_dict())
+            return make_response(user.to_dict(rules=('games_won',)))
         else:
             return make_response({"error" : "no user exists"}, 404)
 
@@ -178,6 +178,20 @@ def check_session():
     else:
         return make_response({'message': 'Unauthorized'}, 401)
 
+
+#get Leaderboards
+@app.route('/leaderboard')
+def get_leaderboard():
+    # leader_list = db.session.query(User, db.func.count(Game.id).label('games_won')).join(User.squares).join(Square.games).group_by(User.id).order_by(db.desc('games_won')).all()
+    # res_dict_list = []
+    # for tuple in leader_list:
+    #     res_dict = tuple[0].to_dict(only=('username', 'id'))
+    #     res_dict['games_won'] = tuple[1]
+    #     res_dict_list.append(res_dict)
+    #     return make_response(res_dict_list)
+    leaders = [user.to_dict(only = ('username', 'id', 'games_won')) for user in User.query.all()]
+    is_sorted = sorted(leaders, key = lambda x : x['games_won'], reverse=True)
+    return make_response(is_sorted)
 
 if __name__ == '__main__':
     app.run(port=5555, debug = True)

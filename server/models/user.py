@@ -1,5 +1,6 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.associationproxy import association_proxy
+from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import validates
 
 from config import db, bcrypt
@@ -7,7 +8,7 @@ from config import db, bcrypt
 class User(db.Model, SerializerMixin):
     __tablename__ = "users"
 
-    serialize_rules = ('-_password_hash', '-squares.user', '-squares.games')
+    serialize_rules = ('-_password_hash', '-squares.user', '-squares.games', 'games_won')
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String)
     _password_hash = db.Column(db.String, nullable=False)
@@ -19,7 +20,11 @@ class User(db.Model, SerializerMixin):
     def games(self):
         list = [l for l in self._games if l != []]
         return [el for item in list for el in item]
-
+    
+    @hybrid_property
+    def games_won(self):
+        return len(self.games)
+    
     @property
     def password_hash(self):
         return self._password_hash
