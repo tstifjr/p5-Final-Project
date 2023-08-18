@@ -3,11 +3,11 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { useHistory, Link } from 'react-router-dom'
 
-import {UserContext} from '../context/user'
+import { UserContext } from '../context/user'
 
 function Signup() {
-    const {user, setUser} = useContext(UserContext)
-    console.log(user)
+    // const { user, setUser } = useContext(UserContext)
+    // console.log(user)
     const history = useHistory()
     const formSchema = yup.object().shape({
         username: yup.string().required("Must enter a Name").min(6),
@@ -40,13 +40,14 @@ function Signup() {
     });
     return (
         <div className='App'>
-        {/* Add Login Option */}
-        <Link to= '/login'>Click Here To Login</Link>
-        <div>Sign Up Page</div>
-        {/* Form JSX */}
+            {/* Add Login Option */}
+            <Link to='/login'>Click Here To Login</Link>
+            <div>Sign Up Page</div>
+            {/* Form JSX */}
             <form onSubmit={formik.handleSubmit}>
                 <label htmlFor='username'>username: </label>
                 <input
+                    placeholder='username...'
                     id='username'
                     name="username"
                     type='text'
@@ -58,6 +59,7 @@ function Signup() {
                 <br></br>
                 <label htmlFor='password'>password: </label>
                 <input
+                    placeholder='password...'
                     id='password'
                     name="password"
                     type='password'
