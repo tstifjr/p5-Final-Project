@@ -84,7 +84,7 @@ if __name__ == "__main__":
         print('...Deleting Squares')
         Square.query.delete()
         print("...seeding squares")
-        rand_num_list = random.sample(range(1,101), 25)
+        rand_num_list = random.sample(range(0,100), 25)
         squares_list = []
         for i in range(0,25):
             sq = Square(user_id = random.randint(1,4), board_pos = rand_num_list[i])
