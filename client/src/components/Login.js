@@ -32,7 +32,7 @@ function Login() {
                             user => {
                                 setUser(user)
                                 setMessage(null)
-                                history.push('/')
+                                history.push('/home')
                             })
                     }
                     else {

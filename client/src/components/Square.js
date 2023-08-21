@@ -1,23 +1,22 @@
 import React, { useState, useContext } from 'react'
 import { UserContext } from '../context/user'
 
-function Square({ row, col }) {
+function Square({ id, row, col, squareInfo, handleAddSq, handleRemoveSq }) {
   // const myClass = `square ${row}${col}`
   const [owned, setOwned] = useState(false)
-  const {user} = useContext(UserContext)
+  const { user } = useContext(UserContext)
   const styled = {
     'gridColumn': col,
     'gridRow': row,
   }
 
-  const setSquareHandle = () => {
-    if (user) {
-      setOwned(!owned)
-    }
-  }
   return (
     <div className="square" style={styled}>
-      {owned ? <div onClick={setSquareHandle}>Owned</div> : <button className='button' onClick={() => setOwned(!owned)}>Add Square</button>}
+      {squareInfo ? 
+      <div onClick={() => handleRemoveSq(squareInfo)}>Owned by: {squareInfo.user_id}
+      </div>
+        :
+        <button className='button' onClick={() => handleAddSq(id)}>Add Square</button>}
     </div>
   )
 }

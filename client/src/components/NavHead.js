@@ -9,7 +9,7 @@ function NavHead({ handleLogout }) {
         <div>
             <span>Welcome, {user && user.username}</span>
             <button onClick={handleLogout}>LogOut</button>
-            <Link to= "/">To Home</Link>
+            <Link to= "/home">To Home</Link>
         </div>
     )
 }
