@@ -29,6 +29,28 @@
 
 }
 
+.row-nums {
+  display: grid;
+  text-align: center;
+  grid-template-columns:100%;
+  grid-auto-rows: 10%;
+  width : 72px;
+  height: 720px;
+  margin: none;
+
+}
+
+.col-nums {
+  display: grid;
+  text-align: center;
+  grid-template-columns:10%;
+  grid-auto-rows: 100%;
+  width : 720px;
+  height: 72px;
+  margin: auto;
+
+}
+
 .a1 {
   grid-column: 1;
   grid-row: 1;

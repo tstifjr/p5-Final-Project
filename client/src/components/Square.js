@@ -13,7 +13,7 @@ function Square({ id, row, col, squareInfo, handleAddSq, handleRemoveSq }) {
   return (
     <div className="square" style={styled}>
       {squareInfo ? 
-      <div onClick={() => handleRemoveSq(squareInfo)}>Owned by: {squareInfo.user_id}
+      <div onClick={() => handleRemoveSq(squareInfo)}>Owned by: {squareInfo?.user?.username}
       </div>
         :
         <button className='button' onClick={() => handleAddSq(id)}>Add Square</button>}

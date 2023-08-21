@@ -10,7 +10,7 @@ function DefaultHome() {
         if (user){
             history.push('/home')
         }
-    },[])
+    },[user])
 
     const handleClick = (e) => {
         if (e.target.name === 'login') {
