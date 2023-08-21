@@ -20,5 +20,28 @@ class Game(db.Model, SerializerMixin):
     square = db.relationship('Square', back_populates='games')
     user = association_proxy('square', 'user')
 
+    @validates('win_score', 'lose_score')
+    def validate_scores(self, key, new_score):
+        if not isinstance(new_score, int):
+            raise ValueError('Must be a number')
+        
+        return new_score
+
+    @validates('win_team', 'lose_team')
+    def validate_teams(self, key, new_team):
+        if not isinstance(new_team, str):
+            raise ValueError('Must be a string')
+        
+        return new_team
+    
+    @validates('round')
+    def validate_round(self, key, new_round):
+         if not isinstance(new_round, int):
+            raise ValueError('Must be a number')
+         elif new_round == 1 or (not (new_round and (not(new_round & (new_round-1))) ) ) :
+             raise ValueError('Not a viable round')
+         
+         return new_round
+        
     def __repr__(self):
         return f'<Game {self.id} : Score: {self.win_score} : {self.lose_score}>'
