@@ -63,16 +63,16 @@ class Squares(Resource):
 
         
         if check_square:
-            return make_response({"error": "this tile was already selected by someone"}, 404)
+            return make_response({"error": "this tile was already selected by someone"}, 402)
         
         try:
             new_square = Square(board_pos = data['board_pos'], user_id = data['user_id'])
         except Exception as e:
-            return make_response({"error" : f"invalid request: {str(e)} "}, 404)
+            return make_response({"error" : f"invalid request: {str(e)} "}, 422)
         
         db.session.add(new_square)
         db.session.commit()
-        return make_response(new_square.to_dict())
+        return make_response(new_square.to_dict(), 201)
 
 api.add_resource(Squares, '/squares')
 

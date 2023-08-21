@@ -11,6 +11,7 @@ import { UserContext } from '../context/user';
 import NavHead from './NavHead';
 import Board from './Board'
 import LeaderBoard from './LeaderBoard';
+import DefaultHome from './DefaultHome'
 
 function App() {
   const { user, setUser } = useContext(UserContext)
@@ -34,6 +35,7 @@ function App() {
         if (r.ok) {
           r.json().then(user => {
             setUser(user)
+            history.push('/')
           })
         }
         else {
@@ -54,7 +56,8 @@ function App() {
         <></>}
 
       <Switch>
-        <Route exact path="/" component={Home} />
+        <Route exact path="/" component={DefaultHome} />
+        <Route path ="/home" component= {Home} />
         <Route path="/login"> <Login /> </Route>
         <Route path="/signup"> <Signup /> </Route>
         <Route path="/profile/:userId" component={Profile} />

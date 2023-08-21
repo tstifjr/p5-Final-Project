@@ -1,8 +1,17 @@
-import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import React, { useEffect, useContext} from 'react'
+import { useHistory} from 'react-router-dom'
+import {UserContext} from '../context/user'
 
-function LoginSignup() {
+function DefaultHome() {
     const history = useHistory()
+    const {user} = useContext(UserContext)
+
+    useEffect(()=>{
+        if (user){
+            history.push('/home')
+        }
+    },[])
+
     const handleClick = (e) => {
         if (e.target.name === 'login') {
             history.push('/login')
@@ -14,7 +23,7 @@ function LoginSignup() {
 
     return (
         <>
-            <div>LoginSignup</div>
+            <div>Welcome to NCAA Squares.  Please Login or Signup Below</div>
             <button name="login" onClick={(e) => handleClick(e)}>Login</button>
             <button name="signup" onClick={(e) => handleClick(e)}>Signup</button>
         </>
@@ -22,4 +31,4 @@ function LoginSignup() {
     )
 }
 
-export default LoginSignup
+export default DefaultHome
