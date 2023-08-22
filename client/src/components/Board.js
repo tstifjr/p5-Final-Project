@@ -6,6 +6,7 @@ function Board() {
   const [allSquares, setAllSquares] = useState(null)
   const [randomRows, setRandomRows] = useState([])
   const [randomCols, setRandomCols] = useState([])
+  const [isLocked, setIsLocked] = useState(false)
 
   useEffect(() => {
     fetch('/squares').then(r => {
@@ -15,16 +16,12 @@ function Board() {
       }
     })
   }, [setAllSquares])
-  // initializeBoard(allSquares)
 
   const handleAddSq = (id) => {
     const squareObj = {
       "board_pos": id,
       "user_id": user.id
-      // 'row_num': null,
-      // 'col_num': null
     }
-    // console.log(squareObj)
     fetch('/squares', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -59,16 +56,28 @@ function Board() {
     }
   }
 
-  function editAllSquares() {
+  function editAllSquares(randomRowArr, randomColArr) {
     const copy = [...allSquares]
     const edited_copy = copy.map(square => {
-      const row_pos = Math.ceil(square.board_pos / 10)
-      const col_pos = square.board_pos % 10 || 10
-      square.row_num = randomRows[row_pos - 1]
-      square.col_num = randomCols[col_pos - 1]
+      const set_row_num = randomRowArr[Math.ceil(square.board_pos / 10) - 1]
+      const set_col_num = randomColArr[(square.board_pos % 10 || 10) - 1]
+
+      const updateSquare = { "row_num": set_row_num, "col_num": set_col_num }
+      fetch(`/squares/${square.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updateSquare),
+      }).then(r => {
+        if (r.ok) {
+          r.json().then(data => {
+            square.row_num = data.row_num
+            square.col_num = data.col_num
+          })
+        }
+      })
       return square
     })
-    // console.log(edited_copy)
+    setAllSquares(edited_copy)
   }
 
   function initializeBoard() {
@@ -76,11 +85,10 @@ function Board() {
     for (let i = 1; i < 101; i++) {
       const isFound = allSquares.find(e => (e.board_pos === i))
       if (isFound) {
-        // console.log(isFound)
-        board_layout.push(<Square id={i} row={Math.ceil(i / 10)} col={i % 10 || 10} squareInfo={isFound} handleRemoveSq={handleRemoveSq} />)
+        board_layout.push(<Square id={i} row={Math.ceil(i / 10)} col={i % 10 || 10} squareInfo={isFound} handleRemoveSq={handleRemoveSq} isLocked={isLocked} />)
       }
       else {
-        board_layout.push(<Square id={i} row={Math.ceil(i / 10)} col={i % 10 || 10} handleAddSq={handleAddSq} />)
+        board_layout.push(<Square id={i} row={Math.ceil(i / 10)} col={i % 10 || 10} handleAddSq={handleAddSq} isLocked={isLocked} />)
       }
     }
     const keyed_board = React.Children.toArray(board_layout)
@@ -106,19 +114,43 @@ function Board() {
   }
 
   function randomize() {
-    setRandomRows(genRandNums())
-    setRandomCols(genRandNums())
+    const randomRowArr = genRandNums()
+    const randomColArr = genRandNums()
+    setRandomRows(randomRowArr)
+    setRandomCols(randomColArr)
+    editAllSquares(randomRowArr, randomColArr)
+
+
   }
 
-  function lockSquares() {
-    if (randomRows.length && randomCols.length) {
-      editAllSquares()
-      console.log(allSquares)
-    }
-    else {
-      console.log(allSquares)
-    }
+  const handleResetBoard = () => {
+    setRandomCols([])
+    setRandomRows([])
+    const copy = [...allSquares]
+    const edited_copy = copy.map(square => {
+      const set_row_num = null
+      const set_col_num = null
+      const updateSquare = { "row_num": set_row_num, "col_num": set_col_num }
 
+      fetch(`/squares/${square.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updateSquare),
+      }).then(r => {
+        if (r.ok) {
+          r.json().then(data => {
+            square.row_num = data.row_num
+            square.col_num = data.col_num
+          })
+
+        }
+        else {
+          r.json().then(data => console.log(data))
+        }
+      })
+      return square
+    })
+    setAllSquares(edited_copy)
   }
 
   return (
@@ -128,8 +160,9 @@ function Board() {
         <p>Here is where we will provide user info and interaction</p>
       </div>
       <div className='App'>Board</div>
-      <button onClick={randomize}>Randomize</button>
-      <button onClick={lockSquares}>LockBoard</button>
+      <button onClick={randomize} disabled={!isLocked}>Randomize</button>
+      <button onClick={() => setIsLocked(!isLocked)}>{isLocked ? 'Unlock' : 'LockBoard'}</button>
+      <button onClick={handleResetBoard}>Reset Board</button>
       <div style={{ "display": "flex" }}>
         <div className='row-nums'>
           {randomRows.length ? generateRowNums() : <></>}

@@ -31,9 +31,9 @@ class Square(db.Model, SerializerMixin):
 
     @validates('col_num', 'row_num')
     def validate_col_row(self, key, new_num):
-        if not isinstance(new_num, int):
+        if not isinstance(new_num, int) and not new_num == None:
             raise TypeError ('needs to be a number')     
-        elif not new_num in range(0,10):
+        elif not new_num in range(0,10) and not new_num == None:
             raise ValueError ('needs to be a number betweeen 0 and 9')
 
         return new_num       
