@@ -4,7 +4,7 @@ import { Link} from 'react-router-dom'
 
 function NavHead({ handleLogout }) {
     const { user} = useContext(UserContext)
-    console.log(user)
+    // console.log(user)
     return (
         <div>
             <span>Welcome, {user && user.username}</span>
