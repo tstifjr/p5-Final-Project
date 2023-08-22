@@ -161,7 +161,7 @@ def login():
         session['user_id'] = user.id
         return make_response(user.to_dict(rules = ('-_password_hash',)))
     else:
-        return make_response({'error' : "Password is inccorect"}, 404)
+        return make_response({'error' : "Password is incorrect"}, 404)
 
 #Logout view
 @app.route('/logout', methods = ["DELETE"])
