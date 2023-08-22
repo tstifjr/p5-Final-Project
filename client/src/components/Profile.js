@@ -42,14 +42,14 @@ function Profile() {
 export default Profile
 
 function SquareCard({ square }) {
-  const sqNum = `${square.board_pos}`
-  const renderNums = `${square.col_num}, ${square.row_num}`
+  const sqNum = `Pos: ${square.board_pos} `
+  const renderNums = `: (${square.col_num}, ${square.row_num})`
   const lastGame = square?.games.length > 0 && square?.games[square?.games.length - 1]
   console.log(square)
   return (
     <div>
-      <h4>{sqNum}</h4>
-      {square.col_num && <h4>{renderNums}</h4>}
+      <span>{sqNum}</span>
+      {square && <span>{renderNums}</span>}
       {lastGame && <h4>Last Score: {lastGame.win_team} : {lastGame.win_score} : {lastGame.lose_team} : {lastGame.lose_score}</h4>}
     </div>
   )
