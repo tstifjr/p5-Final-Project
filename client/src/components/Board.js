@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react'
 import Square from './Square'
 import { UserContext } from '../context/user'
+import Button from 'react-bootstrap/Button'
 function Board() {
   const { user } = useContext(UserContext)
   const [allSquares, setAllSquares] = useState(null)
@@ -160,9 +161,9 @@ function Board() {
         <p>Here is where we will provide user info and interaction</p>
       </div>
       <div className='App'>Board</div>
-      <button onClick={randomize} disabled={!isLocked}>Randomize</button>
-      <button onClick={() => setIsLocked(!isLocked)}>{isLocked ? 'Unlock' : 'LockBoard'}</button>
-      <button onClick={handleResetBoard}>Reset Board</button>
+      <Button onClick={randomize} disabled={!isLocked}>Randomize</Button>
+      <Button onClick={() => setIsLocked(!isLocked)}>{isLocked ? 'Unlock' : 'LockBoard'}</Button>
+      <Button onClick={handleResetBoard}>Reset Board</Button>
       <div style={{ "display": "flex" }}>
         <div className='row-nums'>
           {randomRows.length ? generateRowNums() : <></>}
