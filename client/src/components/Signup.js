@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { useHistory, Link } from 'react-router-dom'
 
-import { UserContext } from '../context/user'
+import { Form, Button} from 'react-bootstrap'
 
 function Signup() {
     // const { user, setUser } = useContext(UserContext)
@@ -39,38 +39,46 @@ function Signup() {
         },
     });
     return (
-        <div className='App'>
-            {/* Add Login Option */}
-            <Link to='/login'>Click Here To Login</Link>
-            <div>Sign Up Page</div>
-            {/* Form JSX */}
-            <form onSubmit={formik.handleSubmit}>
-                <label htmlFor='username'>username: </label>
-                <input
-                    placeholder='username...'
-                    id='username'
-                    name="username"
-                    type='text'
-                    required
-                    onChange={formik.handleChange}
-                    value={formik.values.username} />
-                <br></br>
-                <span>{formik.errors.username}</span>
-                <br></br>
-                <label htmlFor='password'>password: </label>
-                <input
-                    placeholder='password...'
-                    id='password'
-                    name="password"
-                    type='password'
-                    required
-                    onChange={formik.handleChange}
-                    value={formik.values.password} />
-                <br></br>
-                <span>{formik.errors.password}</span>
-                <br></br>
-                <button type='submit'>Submit</button>
-            </form>
+        <div className='container mt-5 mx-auto row justify-content-center'>
+
+            <Link className="btn w-auto h-auto bg-secondary p-3 text-center fs-3" to='/login'>Click Here To Login</Link>
+
+            <div className='p-3 text-center fs-1'>Sign Up Page</div>
+
+            <Form className='text-center w-75 h-auto mt-3' onSubmit={formik.handleSubmit}>
+                <Form.Group className='p-2'>
+                    <Form.Label htmlFor='username'>Username: </Form.Label>
+                    <Form.Control
+                        id='username'
+                        type='text'
+                        placeholder='...enter username'
+                        required
+                        onChange={formik.handleChange}
+                        value={formik.values.username}
+                    />
+                    <Form.Text>
+                        {formik.errors.username}
+                    </Form.Text>
+                </Form.Group>
+                <Form.Group className='p-2'>
+                    <Form.Label htmlFor='password'> Password: </Form.Label>
+                    <Form.Control
+                        placeholder='...password...'
+                        id='password'
+                        type='password'
+                        required
+                        onChange={formik.handleChange}
+                        value={formik.values.password}
+                    />
+                    <Form.Text>
+                        {formik.errors.password}
+                    </Form.Text>
+                </Form.Group>
+                <Form.Group>
+                    <Button className='position-relative' type='submit'>Login</Button>
+                </Form.Group>
+
+            </Form>
         </div>
     )
 }
