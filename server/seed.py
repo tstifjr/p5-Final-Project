@@ -76,18 +76,21 @@ if __name__ == "__main__":
         print("...seeding Users")
         u1 = User(username="tjstifter", password_hash = "qweqweqwe")
         u2 = User(username="tesj20", password_hash = "qazqazqaz")
-        u3 = User(username="user1", password_hash = "user1user")
-        u4 = User(username ="user2", password_hash = "user2user")
-        db.session.add_all([u1, u2, u3, u4])
+        u3 = User(username="user111", password_hash = "user1user")
+        u4 = User(username ="user222", password_hash = "user2user")
+        u5 = User(username ="basketwhiz", password_hash = "bball1")
+        u6 = User(username ="magicmoe", password_hash = "bball2")
+        u7 = User(username ="terpfan1", password_hash = "terp2win")
+        db.session.add_all([u1, u2, u3, u4, u5, u6, u7])
         db.session.commit()
 
         print('...Deleting Squares')
         Square.query.delete()
         print("...seeding squares")
-        rand_num_list = random.sample(range(0,100), 25)
+        rand_num_list = random.sample(range(0,100), 70)
         squares_list = []
-        for i in range(0,25):
-            sq = Square(user_id = random.randint(1,4), board_pos = rand_num_list[i])
+        for i in range(0,70):
+            sq = Square(user_id = random.randint(1,7), board_pos = rand_num_list[i])
             squares_list.append(sq)
         
         db.session.add_all(squares_list)
