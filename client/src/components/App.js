@@ -12,6 +12,7 @@ import NavHead from './NavHead';
 import Board from './Board'
 import LeaderBoard from './LeaderBoard';
 import DefaultHome from './DefaultHome'
+import Button from 'react-bootstrap/Button'
 
 function App() {
   const { user, setUser } = useContext(UserContext)

@@ -1,6 +1,7 @@
 import React, {useContext} from 'react'
 import {UserContext} from '../context/user'
 import { Link} from 'react-router-dom'
+import Button from 'react-bootstrap/Button'
 
 function NavHead({ handleLogout }) {
     const { user} = useContext(UserContext)
@@ -8,7 +9,7 @@ function NavHead({ handleLogout }) {
     return (
         <div>
             <span>Welcome, {user && user.username}</span>
-            <button onClick={handleLogout}>LogOut</button>
+            <Button className='btn-info' onClick={handleLogout}>LogOut</Button>
             <Link to= "/home">To Home</Link>
         </div>
     )
