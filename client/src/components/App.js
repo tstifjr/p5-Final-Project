@@ -1,5 +1,3 @@
-// import logo from './logo.svg';
-import '../App.css';
 import React, { useContext, useEffect } from 'react'
 import { Route, Switch, useHistory } from 'react-router-dom'
 import Login from './Login'
@@ -12,7 +10,8 @@ import NavHead from './NavHead';
 import Board from './Board'
 import LeaderBoard from './LeaderBoard';
 import DefaultHome from './DefaultHome'
-import Button from 'react-bootstrap/Button'
+// import Button from 'react-bootstrap/Button'
+import About from './About';
 
 function App() {
   const { user, setUser } = useContext(UserContext)
@@ -64,6 +63,7 @@ function App() {
         <Route path="/profile/:userId" component={Profile} />
         <Route path="/boardmanager" component={Board} />
         <Route path="/leaderboard" component={LeaderBoard} />
+        <Route path="/about" component={About} />
         {/* add boardview */}
 
 
