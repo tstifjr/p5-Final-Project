@@ -1,13 +1,31 @@
 import React, { useState, useContext, useEffect } from 'react'
 import Square from './Square'
+import { BoardContext } from '../context/board';
 import { UserContext } from '../context/user'
-import Button from 'react-bootstrap/Button'
+import {Button, Container, Table } from 'react-bootstrap/'
 function Board() {
   const { user } = useContext(UserContext)
+  const { board, setBoard } = useContext(BoardContext)
   const [allSquares, setAllSquares] = useState(null)
   const [randomRows, setRandomRows] = useState([])
   const [randomCols, setRandomCols] = useState([])
   const [isLocked, setIsLocked] = useState(false)
+
+
+  const buildTable = board && Array.from({ length: 10 }).map((x, j) => {
+    const displayRow = board && board.filter((_, i) => i < (j + 1) * 10 && i >= j * 10).map((square, i) => <td key={i}> <Square key={i} squareInfo={square}/> </td>)
+    return (
+      <tr>
+        <td>random Col # goes here</td>
+        {displayRow}
+      </tr>
+    )
+  })
+  const keyedBoard = React.Children.toArray(buildTable)
+
+
+
+
 
   useEffect(() => {
     fetch('/squares').then(r => {
@@ -81,38 +99,7 @@ function Board() {
     setAllSquares(edited_copy)
   }
 
-  function initializeBoard() {
-    const board_layout = []
-    for (let i = 1; i < 101; i++) {
-      const isFound = allSquares.find(e => (e.board_pos === i))
-      if (isFound) {
-        board_layout.push(<Square id={i} row={Math.ceil(i / 10)} col={i % 10 || 10} squareInfo={isFound} handleRemoveSq={handleRemoveSq} isLocked={isLocked} />)
-      }
-      else {
-        board_layout.push(<Square id={i} row={Math.ceil(i / 10)} col={i % 10 || 10} handleAddSq={handleAddSq} isLocked={isLocked} />)
-      }
-    }
-    const keyed_board = React.Children.toArray(board_layout)
-    return keyed_board
-  }
 
-  function generateColNums() {
-    const row = []
-    for (let i = 1; i < 11; i++) {
-      row.push(<NumTile row={1} col={i % 10 || 10} number={randomCols[i - 1]} />)
-    }
-    const keyed_row = React.Children.toArray(row)
-    return keyed_row
-  }
-
-  function generateRowNums() {
-    const cols = []
-    for (let i = 1; i < 11; i++) {
-      cols.push(<NumTile row={i % 10 || 10} col={1} number={randomRows[i - 1]} />)
-    }
-    const keyed_cols = React.Children.toArray(cols)
-    return keyed_cols
-  }
 
   function randomize() {
     const randomRowArr = genRandNums()
@@ -154,6 +141,39 @@ function Board() {
     setAllSquares(edited_copy)
   }
 
+  // function initializeBoard() {
+  //   const board_layout = []
+  //   for (let i = 1; i < 101; i++) {
+  //     const isFound = allSquares.find(e => (e.board_pos === i))
+  //     if (isFound) {
+  //       board_layout.push(<Square id={i} row={Math.ceil(i / 10)} col={i % 10 || 10} squareInfo={isFound} handleRemoveSq={handleRemoveSq} isLocked={isLocked} />)
+  //     }
+  //     else {
+  //       board_layout.push(<Square id={i} row={Math.ceil(i / 10)} col={i % 10 || 10} handleAddSq={handleAddSq} isLocked={isLocked} />)
+  //     }
+  //   }
+  //   const keyed_board = React.Children.toArray(board_layout)
+  //   return keyed_board
+  // }
+
+  // function generateColNums() {
+  //   const row = []
+  //   for (let i = 1; i < 11; i++) {
+  //     row.push(<NumTile row={1} col={i % 10 || 10} number={randomCols[i - 1]} />)
+  //   }
+  //   const keyed_row = React.Children.toArray(row)
+  //   return keyed_row
+  // }
+
+  // function generateRowNums() {
+  //   const cols = []
+  //   for (let i = 1; i < 11; i++) {
+  //     cols.push(<NumTile row={i % 10 || 10} col={1} number={randomRows[i - 1]} />)
+  //   }
+  //   const keyed_cols = React.Children.toArray(cols)
+  //   return keyed_cols
+  // }
+
   return (
     <>
       <div>
@@ -164,7 +184,23 @@ function Board() {
       <Button onClick={randomize} disabled={!isLocked}>Randomize</Button>
       <Button onClick={() => setIsLocked(!isLocked)}>{isLocked ? 'Unlock' : 'LockBoard'}</Button>
       <Button onClick={handleResetBoard}>Reset Board</Button>
-      <div style={{ "display": "flex" }}>
+      <Container>
+        <Table bordered hover responsive>
+          <thead>
+            <tr>
+              <th># W \ L</th>
+              {board && Array.from({ length: 10 }).map((_, index) => (
+                <th key={index}>Random # here</th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {keyedBoard}
+          </tbody>
+        </Table>
+      </Container >
+
+      {/* <div style={{ "display": "flex" }}>
         <div className='row-nums'>
           {randomRows.length ? generateRowNums() : <></>}
         </div>
@@ -174,7 +210,7 @@ function Board() {
         <div className='Wrapper'>
           {allSquares && initializeBoard()}
         </div>
-      </div>
+      </div> */}
 
     </>
 
