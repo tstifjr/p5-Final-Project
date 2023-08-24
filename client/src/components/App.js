@@ -7,7 +7,7 @@ import NotFound from './NotFound';
 import Profile from './Profile';
 import { UserContext } from '../context/user';
 import NavHead from './NavHead';
-import Board from './Board'
+import EditBoard from './EditBoard'
 import LeaderBoard from './LeaderBoard';
 import DefaultHome from './DefaultHome'
 // import Button from 'react-bootstrap/Button'
@@ -61,7 +61,7 @@ function App() {
         <Route path="/login"> <Login /> </Route>
         <Route path="/signup"> <Signup /> </Route>
         <Route path="/profile/:userId" component={Profile} />
-        <Route path="/boardmanager" component={Board} />
+        <Route path="/boardmanager" component={EditBoard} />
         <Route path="/leaderboard" component={LeaderBoard} />
         <Route path="/about" component={About} />
         {/* add boardview */}
