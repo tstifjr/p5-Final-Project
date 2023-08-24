@@ -1,32 +1,46 @@
 import React, { useState, useContext } from 'react'
 import SquareCard from './SquareCard'
 import { UserContext } from '../context/user'
-import {Button} from 'react-bootstrap'
-function Square({ id, row, col, squareInfo, handleAddSq, handleRemoveSq, isLocked }) {
-  // const { user } = useContext(UserContext)
-  // const styled = {
-  //   'gridColumn': col,
-  //   'gridRow': row,
-  // }
+import { SquaresContext } from '../context/squares'
+import { Button, Container, Card } from 'react-bootstrap'
+function Square({ pos, squareInfo }) {
+  const { user } = useContext(UserContext)
+  const { squares, setSquares } = useContext(SquaresContext)
 
-  // return (
-  //   <div className="square" style={styled}>
-  //     {squareInfo ? 
-  //     <div onClick={() => isLocked ? console.log(squareInfo) : handleRemoveSq(squareInfo)}>Owned by: {squareInfo?.user?.username}
-  //     </div>
-  //       :
-  //       <button className='button' onClick={() => handleAddSq(id)} disabled={isLocked}>Add Square</button>}
-  //   </div>
-  // )
+  const handleAddSq = () => {
+    const squareObj = {
+      "board_pos": pos,
+      "user_id": user.id
+    }
+    console.log(squareObj)
+    fetch('/squares', {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(squareObj, null, 2),
+    }).then(r => {
+      if (r.ok) {
+        r.json().then(newSquare => setSquares([...squares, newSquare]))
+      }
+      else {
+        r.json().then(data => console.log(data))
+      }
+    })
+
+  }
+
   return (
     <div>
       {squareInfo.user ?
-      <div><SquareCard squareInfo={squareInfo} /></div>  :
-      <div><Button>Add Square</Button></div>
-    }
+        <div><SquareCard squareInfo={squareInfo} /></div>
+        :
+        <Card>
+          <Card.Body className='text-center mt-1'>
+            <Button onClick={handleAddSq}>Add Square</Button>
+          </Card.Body>
+        </Card>
+      }
     </div>
   )
 }
 
 export default Square
-

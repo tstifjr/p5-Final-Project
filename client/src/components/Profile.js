@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../context/user'
 import { useParams } from 'react-router-dom'
 import { Card, Container, Col, Row } from 'react-bootstrap'
@@ -6,7 +6,7 @@ import { Card, Container, Col, Row } from 'react-bootstrap'
 function Profile() {
   const { userId } = useParams();
   const { user, setUser } = useContext(UserContext)
-  // const id = user && user.id
+  const [viewedUser, setViewedUser] = useState(null)
   // const history = useHistory()
   useEffect(() => {
 
@@ -14,31 +14,32 @@ function Profile() {
       .then(r => {
         if (r.ok) {
           r.json()
-            .then(data => setUser(data))
+            .then(user => setViewedUser(user))
         }
       })
 
 
-  }, [setUser, userId])
+  }, [setViewedUser, userId])
+  // console.log(viewedUser)
 
-  const squareCardList = user && user.squares.map((square, idx) => {
+  const squareCardList = viewedUser && viewedUser.squares.map((square, idx) => {
     return (
       <Col key={idx}>
         <SquareCard square={square} />
       </Col>)
   })
-  // const keyedSquares = React.Children.toArray(squareCardList)
 
-  // const gamesList = user && user.games.map(game => <div><span>{game.win_team} : {game.win_score}</span> <span>{game.lose_team} : {game.lose_score}</span></div>)
-  // const keyedGamesList = React.Children.toArray(gamesList)
+  console.log(viewedUser?.squares[1]?.games)
   return (
     <div className='App'>
-      {/* <h2>Welcome, {user && user.username}</h2> */}
-      {user && user.games_won > 0 ?
+      <h2>Profile : {viewedUser && viewedUser.username}</h2>
+      {viewedUser?.games_won ?
         <div>
-          <h4>You have won: {user.games_won} games</h4>
-        </div> : <></>}
-      <h3 className='p-3'> Your Squares are:</h3>
+          <h3>Games Won: {viewedUser.games_won} games</h3>
+        </div>
+        : <></>
+      }
+      <h3 className='p-3'> Squares Owned:</h3>
       <Row xs={1} md={5} className="g-4">
         {squareCardList}
       </Row>
@@ -53,9 +54,9 @@ function SquareCard({ square }) {
   const sqNum = `Pos: ${square.board_pos} `
   const renderNums = (square.col_num === null) ? null : `(${square.col_num}, ${square.row_num})`
   const lastGame = square?.games.length > 0 && square?.games[square?.games.length - 1]
-  console.log(square)
+  // console.log(square.games)
   return (
-    <Card className="mx-auto" style={{ width: '12rem' }} >
+    <Card className="mx-auto" style={{ width: '10rem' }} >
       <Card.Title>
         {sqNum}
       </Card.Title>
@@ -64,7 +65,8 @@ function SquareCard({ square }) {
       </Card.Header>
 
       <Card.Body>
-        {lastGame && <span>Last Score: {lastGame.win_team} : {lastGame.win_score} : {lastGame.lose_team} : {lastGame.lose_score}</span>}
+      {square.games.map((g) => <i>!@!</i>)}
+        {/* {lastGame && <span>Last Score: {lastGame.win_team} : {lastGame.win_score} : {lastGame.lose_team} : {lastGame.lose_score}</span>} */}
       </Card.Body>
     </Card>
 

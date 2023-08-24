@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from 'react-router-dom'
 
 import { UserProvider } from './context/user'
-import { BoardProvider } from './context/board'
+import { SquaresProvider } from './context/squares'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap/dist/js/bootstrap.bundle.min";
@@ -15,11 +15,11 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Router>
-      <BoardProvider>
+      <SquaresProvider>
         <UserProvider>
           <App />
         </UserProvider>
-      </BoardProvider>
+      </SquaresProvider>
     </Router>
   </React.StrictMode>
 );
