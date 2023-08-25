@@ -2,12 +2,13 @@ import React, { useState, useContext, useEffect } from 'react'
 import Square from './Square'
 import { SquaresContext } from '../context/squares';
 import { UserContext } from '../context/user'
-import {Button, Container, Table } from 'react-bootstrap/'
+import { Button, Container, Table } from 'react-bootstrap/'
 import { initializeBoard } from '../context/globalFunctions';
+import BuildBoard from './BuildBoard';
 
 function EditBoard() {
   const { user } = useContext(UserContext)
-  const {squares, setSquares} = useContext(SquaresContext)
+  const { squares, setSquares } = useContext(SquaresContext)
   const [randomRows, setRandomRows] = useState([])
   const [randomCols, setRandomCols] = useState([])
   const [isLocked, setIsLocked] = useState(false)
@@ -23,22 +24,6 @@ function EditBoard() {
   //   )
   // })
   // const keyedBoard = React.Children.toArray(buildTable)
-
-
-
-
-
-  // useEffect(() => {
-  //   fetch('/squares').then(r => {
-  //     if (r.ok) {
-  //       r.json()
-  //         .then(data => setSquares(data))
-  //     }
-  //   })
-  // }, [setSquares])
-
-
-
 
   // function initializeBoard() {
   //   const board_layout = []
@@ -75,29 +60,14 @@ function EditBoard() {
 
   return (
     <>
-    <Container>
-    <p>You can edit your selections below</p>
-    </Container>
-      {/* <Button onClick={randomize} disabled={!isLocked}>Randomize</Button>
-      <Button onClick={() => setIsLocked(!isLocked)}>{isLocked ? 'Unlock' : 'LockBoard'}</Button>
-      <Button onClick={handleResetBoard}>Reset Board</Button> */}
+      <Container>
+        <p>You can edit your selections below</p>
+      </Container>
+
       <Container>
         <h2 className='text-center'>The Board</h2>
-      {squares && <BuildBoardInitial squares={squares}/>}
+        {squares && <BuildBoard squares={squares} squareType={"Square"}/>}
       </Container >
-
-      {/* <div style={{ "display": "flex" }}>
-        <div className='row-nums'>
-          {randomRows.length ? generateRowNums() : <></>}
-        </div>
-        <div className='col-nums'>
-          {randomCols.length ? generateColNums() : <></>}
-        </div>
-        <div className='Wrapper'>
-          {allSquares && initializeBoard()}
-        </div>
-      </div> */}
-
     </>
 
   )
@@ -105,23 +75,23 @@ function EditBoard() {
 
 export default EditBoard
 
-function BuildBoardInitial({squares}) {
+function BuildBoardEditor({ squares }) {
   const board = initializeBoard(squares)
   const buildTable = board && Array.from({ length: 10 }).map((x, j) => {
-      const displayRow = board && board.filter((tile, i) => i < (j + 1) * 10 && i >= j * 10).map((square, i) => <td key={i}><Square key={i} pos={j*10 + (i + 1)} squareInfo={square} /> </td>)
-      return (
-          <tr>
-              {displayRow}
-          </tr>
-      )
+    const displayRow = board && board.filter((tile, i) => i < (j + 1) * 10 && i >= j * 10).map((square, i) => <td key={i}><Square key={i} pos={j * 10 + (i + 1)} squareInfo={square} /> </td>)
+    return (
+      <tr>
+        {displayRow}
+      </tr>
+    )
   })
   const keyedBoard = React.Children.toArray(buildTable)
   return (
-      <Table bordered hover responsive>
-          <tbody>
-              {keyedBoard}
-          </tbody>
-      </Table>
+    <Table bordered hover responsive>
+      <tbody>
+        {keyedBoard}
+      </tbody>
+    </Table>
   )
 }
 

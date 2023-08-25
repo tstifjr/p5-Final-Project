@@ -9,7 +9,7 @@ function Home() {
     return (
         user ? <div className='App'>
             This is the Homepage
-            <Link to='/boardviewer'>Let's Play Page :: </Link>
+            <Link to='/play'>Let's Play Page :: </Link>
             <div>
                 <ViewBoard />
             </div>

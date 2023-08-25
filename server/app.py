@@ -3,6 +3,7 @@ from flask_restful import Resource
 
 from config import app, db, api
 from models import User, Game, Square
+import random
 
 ##### Restful Routes
 class Users(Resource):
@@ -73,6 +74,11 @@ class Squares(Resource):
         db.session.add(new_square)
         db.session.commit()
         return make_response(new_square.to_dict(), 201)
+    
+    def delete(self):
+        Square.query.delete()
+        db.session.commit()
+        return make_response({}, 204)
 
 api.add_resource(Squares, '/squares')
 
@@ -177,6 +183,29 @@ def check_session():
         return make_response(user.to_dict())
     else:
         return make_response({'message': 'Unauthorized'}, 401)
+    
+#randomly fill out remaining ssquares on board
+@app.route('/fillboard', methods = ["POST"])
+def fill_board():
+    data = request.get_json()
+    print(data)
+    sq_num_list = data['empty_squares']
+    if len(sq_num_list) == 0:
+        return make_response({"error" : f"All squares filled"}, 404)
+    print(sq_num_list)
+    dict_list = []
+    for num in sq_num_list:
+        user = random.choice(User.query.all())
+        try:
+            new_square = Square(board_pos = num, user_id = user.id)
+            db.session.add(new_square)
+            db.session.commit()
+        except Exception as e:
+            return make_response({"error" : f"invalid request: {str(e)} "}, 404)
+        
+        dict_list.append(new_square.to_dict())
+    return make_response(dict_list, 201)
+    
 
 
 #get Leaderboards

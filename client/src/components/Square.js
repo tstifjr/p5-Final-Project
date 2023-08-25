@@ -12,7 +12,6 @@ function Square({ pos, squareInfo }) {
       "board_pos": pos,
       "user_id": user.id
     }
-    console.log(squareObj)
     fetch('/squares', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -31,7 +30,7 @@ function Square({ pos, squareInfo }) {
   return (
     <div>
       {squareInfo.user ?
-        <div><SquareCard squareInfo={squareInfo} /></div>
+        <SquareCard key={squareInfo.id} squareInfo={squareInfo} />
         :
         <Card>
           <Card.Body className='text-center mt-1'>

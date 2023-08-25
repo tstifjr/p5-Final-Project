@@ -25,7 +25,7 @@ function Profile() {
   const squareCardList = viewedUser && viewedUser.squares.map((square, idx) => {
     return (
       <Col key={idx}>
-        <SquareCard square={square} />
+        <SquareCardProfile square={square} />
       </Col>)
   })
 
@@ -50,7 +50,7 @@ function Profile() {
 
 export default Profile
 
-function SquareCard({ square }) {
+function SquareCardProfile({ square }) {
   const sqNum = `Pos: ${square.board_pos} `
   const renderNums = (square.col_num === null) ? null : `(${square.col_num}, ${square.row_num})`
   const lastGame = square?.games.length > 0 && square?.games[square?.games.length - 1]
@@ -65,7 +65,7 @@ function SquareCard({ square }) {
       </Card.Header>
 
       <Card.Body>
-      {square.games.map((g) => <i>!@!</i>)}
+      {square.games.map((g) => <i key={g.id}>!@!</i>)}
         {/* {lastGame && <span>Last Score: {lastGame.win_team} : {lastGame.win_score} : {lastGame.lose_team} : {lastGame.lose_score}</span>} */}
       </Card.Body>
     </Card>
