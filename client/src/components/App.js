@@ -12,6 +12,7 @@ import LeaderBoard from './LeaderBoard';
 import DefaultHome from './DefaultHome'
 // import Button from 'react-bootstrap/Button'
 import About from './About';
+import LetsPlay from './LetsPlay';
 
 function App() {
   const { user, setUser } = useContext(UserContext)
@@ -64,7 +65,7 @@ function App() {
         <Route path="/boardmanager" component={EditBoard} />
         <Route path="/leaderboard" component={LeaderBoard} />
         <Route path="/about" component={About} />
-        {/* add boardview */}
+        <Route path="/play" component={LetsPlay} />
 
 
         <Route path="*"><NotFound /></Route>
