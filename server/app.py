@@ -42,14 +42,14 @@ class UserById(Resource):
     # def patch(self, id):
     #     pass
 
-    def delete(self, id):
-        user = User.query.filter_by(id=id).first()
-        if user:
-            db.session.delete(user)
-            db.session.commit()
-            return make_response({}, 204)
-        else:
-            return make_response({"error":"invalid user: Does not exist"}, 404)
+    # def delete(self, id):
+    #     user = User.query.filter_by(id=id).first()
+    #     if user:
+    #         db.session.delete(user)
+    #         db.session.commit()
+    #         return make_response({}, 204)
+    #     else:
+    #         return make_response({"error":"invalid user: Does not exist"}, 404)
 
 api.add_resource(UserById, '/users/<int:id>')
 
@@ -148,6 +148,21 @@ class GameById(Resource):
             return make_response(game.to_dict())
         else:
             return make_response({"error" : "no game exists"}, 404)
+        
+    def patch(self, id):
+        game = Game.query.filter_by(id=id).first()
+        data = request.get_json()
+        if not game :
+            return make_response({"error" : "no game exists"}, 404)
+        
+        try:
+            for attr in data:
+                setattr(game, attr, data[attr])
+        except Exception as e:
+            return make_response({"error" : f"invalid request: {str(e)} "}, 404)      
+
+        db.session.commit()
+        return make_response(game.to_dict()) 
 
 api.add_resource(GameById, '/games/<int:id>')
 
@@ -205,7 +220,15 @@ def fill_board():
         
         dict_list.append(new_square.to_dict())
     return make_response(dict_list, 201)
+
+#srubs the games database from having assigned squares
+@app.route('/scrubgames', methods = ["DELETE"])
+def scrub_games():
+    for game in Game.query.all():
+        game.square_id = None
     
+    db.session.commit()
+    return make_response({}, 204)
 
 
 #get Leaderboards

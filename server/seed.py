@@ -118,7 +118,7 @@ if __name__ == "__main__":
             win_score = max([final.home_score, final.away_score])
             lose_score = min([final.home_score, final.away_score])
 
-            game2 = Game(round = rand_round, win_team = rand_teams[0], lose_team = rand_teams[1], square_id = rand_sq.id, win_score = win_score, lose_score = lose_score)
+            game2 = Game(round = rand_round, win_team = rand_teams[0], lose_team = rand_teams[1], win_score = win_score, lose_score = lose_score)
 
             game_list.append(game2)
 
