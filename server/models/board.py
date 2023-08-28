@@ -14,6 +14,6 @@ class Board(db.Model, SerializerMixin):
     empty_squares = db.Column(db.Integer)
 
     # can add one-to-many relationship with squares at some point
-    
+
     def __repr__(self):
-        return f'<Board: {self.id}'
+        return f'<Board: {self.id}>'
