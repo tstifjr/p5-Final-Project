@@ -2,7 +2,7 @@ from flask import make_response, request, session
 from flask_restful import Resource
 
 from config import app, db, api
-from models import User, Game, Square
+from models import User, Game, Square, Board
 import random
 
 ##### Restful Routes
@@ -75,6 +75,17 @@ class Squares(Resource):
         db.session.commit()
         return make_response(new_square.to_dict(), 201)
     
+    def patch(self):
+        dataArr = request.get_json()
+        for data in dataArr:
+            square = Square.query.get(data['id'])
+            for attr in data:
+                setattr(square, attr, data[attr])
+        
+        db.session.commit()
+        all_squares = [square.to_dict() for square in Square.query.all()]
+        return make_response(all_squares)
+
     def delete(self):
         Square.query.delete()
         db.session.commit()
@@ -168,10 +179,26 @@ api.add_resource(GameById, '/games/<int:id>')
 
 class BoardById (Resource):
     def get(self, id):
-        pass
-
+        board = Board.query.get(id)
+        if not board :
+            return make_response({"error" : "board does not exist"}, 404)
+        
+        return make_response(board.to_dict())
+    
     def patch(self, id):
-        pass
+        board = Board.query.filter_by(id=id).first()
+        data = request.get_json()
+        if not board :
+            return make_response({"error" : "no board exists"}, 404)
+        
+        try:
+            for attr in data:
+                setattr(board, attr, data[attr])
+        except Exception as e:
+            return make_response({"error" : f"invalid request: {str(e)} "}, 404) 
+        
+        db.session.commit()
+        return make_response(board.to_dict()) 
 
 api.add_resource(BoardById, '/boards/<int:id>')
 ###Individual Views#########
@@ -210,11 +237,9 @@ def check_session():
 @app.route('/fillboard', methods = ["POST"])
 def fill_board():
     data = request.get_json()
-    print(data)
     sq_num_list = data['empty_squares']
     if len(sq_num_list) == 0:
         return make_response({"error" : f"All squares filled"}, 404)
-    print(sq_num_list)
     dict_list = []
     for num in sq_num_list:
         user = random.choice(User.query.all())
