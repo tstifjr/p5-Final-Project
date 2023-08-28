@@ -1,62 +1,69 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { Container, Button, Col, Row } from 'react-bootstrap'
 import { SquaresContext } from '../context/squares'
+import { patchItem } from '../globalFunctions'
 
-function GameUI({ randNums }) {
+function GameUI({ board }) {
   const [games, setGames] = useState([])
   const [cnt, setCnt] = useState(0)
-  const [showGames, setShowGames] = useState([])
   const { squares, setSquares } = useContext(SquaresContext)
 
   useEffect(() => {
     fetch('/games')
       .then(r => r.json())
       .then(games => setGames(games))
-  }, [])
+
+    board && setCnt(board['game_cnt'])
+  }, [board])
 
 
   const handleGameCreate = () => {
+
+    const rowNums = board?.rownums.split(',').map(num => parseInt(num))
+    const colNums = board?.colnums.split(',').map(num => parseInt(num))
+    const game = games[cnt]
+    const rowIdx = rowNums && rowNums.indexOf(game.lose_score % 10)
+    const colIdx = colNums && colNums.indexOf(game.win_score % 10)
+    const board_pos = rowIdx * 10 + colIdx
+    const square = squares.find(square => square.board_pos === board_pos)
+    if (!square) console.log("no PERSON here")
+    else {
+      const updateGame = { "square_id": square.id }
+     
+      //Add game to square
+      patchItem(game, updateGame, `/games/${game.id}`)
+      const updatedGames = [...games].map(g => g.id === game.id ? game : g)
+      setGames(updatedGames)
+    }
+
+    //reFRESHES board BY FETCH ING sQUARES
+    fetch('/squares').then(r => r.json()).then(squares => setSquares(squares))
+
+    //increase game counter
     if (cnt >= games.length) {
+      patchItem(board, { "game_cnt": 0 }, `/boards/1`)
       setCnt(0)
     }
     else {
+      patchItem(board, { "game_cnt": cnt + 1 }, `/boards/1`)
       setCnt(cnt => cnt += 1)
     }
-    const game = games[cnt]
-    const rowIdx = randNums && randNums[0].indexOf(game.lose_score % 10)
-    const colIdx = randNums && randNums[1].indexOf(game.win_score % 10)
-    const board_pos = rowIdx * 10 + colIdx
-    console.log(game.square_id)
-    const square = squares && squares.find(square => square.board_pos === board_pos)
-    const updateGame = { "square_id" : square.id }
-    console.log(updateGame)
-    //Add game to square connector here....
-    fetch(`/games/${game.id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updateGame),
-    }).then(r => {
-      if (r.ok) {
-        r.json().then(data => {
-          game.square_id = data.square_id
-        })
-      }
-      else{
-        r.json().then(data => console.log(data))
-      }
-    })
-    setShowGames([...showGames, game])
-    const updatedGames = [...games].map(g => g.id === game.id ? game : g)
-    setGames(updatedGames)
-
-    fetch('/squares').then(r=>r.json()).then(squares => setSquares(squares))
   }
 
+  const completedGames = games.filter((game) => game.id <= cnt)
   return (
     <Container>
-      <Button onClick={handleGameCreate}>DrawGame</Button>
+      <Button onClick={handleGameCreate} disabled= {!board || !board?.colnums}>DrawGame</Button>
       <Col>
-        {showGames && showGames.map(game => <div key={game.id}>Round: {game.round}, Score: {game.win_score}, {game.lose_score}</div>)}
+        {games && completedGames.map(game => {
+          return (<div key={game.id}>
+            <span>Round: {game.round} ::</span>
+            <span>Teams: {game.win_team}, {game.lose_team} ::</span>
+            <span>Score: {game.win_score}, {game.lose_score} ::</span>
+            <span>Winner: {game.square?.board_pos}</span>
+          </div>)
+        })
+        }
       </Col>
     </Container>
   )

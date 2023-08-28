@@ -1,7 +1,7 @@
 import React from 'react'
 import { useHistory } from 'react-router-dom'
 import { Row, Col, Container, Card } from 'react-bootstrap'
-function SquareView({ square, id }) {
+function SquareViewer({ square, id }) {
     const history = useHistory()
     const handleView = () => {
         // console.log(square.user.id)
@@ -10,19 +10,19 @@ function SquareView({ square, id }) {
     return (
         <>
             {square.user ?
-                <Card onClick={handleView}>
-                    <Card.Header className='text-center'><h5>{square?.user?.username}</h5></Card.Header>
+                <div className= "border" style={{width: "150px", height:"150px"}} onClick={handleView}>
+                    <header className='text-center'><p>{square?.user?.username}</p></header>
 
-                    <Card.Body>
                     {square.games.map((g) => <i key={g.id}>!@$</i>)}
-                    </Card.Body>
-                </Card>
+
+                </div>
                 :
-                <Card>
-                </Card>
+                <div className= "border h-100" style={{width: "150px" }}>
+                </div>
             }
+
         </>
     )
 }
 
-export default SquareView
+export default SquareViewer

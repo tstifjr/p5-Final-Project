@@ -1,34 +1,34 @@
-import React, { useState, useContext, useEffect } from 'react'
-import Square from './Square'
-import { SquaresContext } from '../context/squares';
-import { UserContext } from '../context/user'
-import { Button, Container, Table } from 'react-bootstrap/'
-import { initializeBoard } from '../context/globalFunctions';
-import BuildBoard from './BuildBoard';
+// import React, { useState, useContext, useEffect } from 'react'
+// import Square from './Square'
+// import { SquaresContext } from '../context/squares';
+// import { UserContext } from '../context/user'
+// import { Button, Container, Table } from 'react-bootstrap/'
+// import { initializeBoard } from '../context/globalFunctions';
+// import BuildBoard from './BuildBoard';
 
-function EditBoard() {
-  const { user } = useContext(UserContext)
-  const { squares, setSquares } = useContext(SquaresContext)
-  const [randomRows, setRandomRows] = useState([])
-  const [randomCols, setRandomCols] = useState([])
-  const [isLocked, setIsLocked] = useState(false)
+// function EditBoard() {
+//   const { user } = useContext(UserContext)
+//   const { squares, setSquares } = useContext(SquaresContext)
+//   const [randomRows, setRandomRows] = useState([])
+//   const [randomCols, setRandomCols] = useState([])
+//   const [isLocked, setIsLocked] = useState(false)
 
-  return (
-    <>
-      <Container>
-        <p>You can edit your selections below</p>
-      </Container>
+//   return (
+//     <>
+//       <Container>
+//         <p>You can edit your selections below</p>
+//       </Container>
 
-      <Container>
-        <h2 className='text-center'>The Board</h2>
-        {squares && <BuildBoard squares={squares} squareType={"Square"}/>}
-      </Container >
-    </>
+//       <Container>
+//         <h2 className='text-center'>The Board</h2>
+//         {squares && <BuildBoard squares={squares} squareType={"Square"}/>}
+//       </Container >
+//     </>
 
-  )
-}
+//   )
+// }
 
-export default EditBoard
+// export default EditBoard
 
 // function BuildBoardEditor({ squares }) {
 //   const board = initializeBoard(squares)

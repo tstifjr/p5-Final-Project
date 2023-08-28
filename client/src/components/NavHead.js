@@ -23,11 +23,12 @@ function NavHead({ handleLogout }) {
 
 
                 <Nav className='container justify-content-center'>
-                    <LinkContainer to='/home'><Nav.Link className='p-1'>Home</Nav.Link></LinkContainer>
+                    <LinkContainer to='/'><Nav.Link className='p-1'>Home</Nav.Link></LinkContainer>
                     <LinkContainer to='/about'><Nav.Link className='p-1'>About</Nav.Link></LinkContainer>
                     <LinkContainer to='/boardManager'><Nav.Link className='p-1'>Edit Board</Nav.Link></LinkContainer>
                     <LinkContainer to={`/profile/${user.id}`}><Nav.Link className='p-1'>View Profile</Nav.Link></LinkContainer>
-                    <LinkContainer to='/leaderboard'><Nav.Link className='p-1'>To LeaderBoard</Nav.Link></LinkContainer>
+                    <LinkContainer to='/leaderboard'><Nav.Link className='p-1'>LeaderBoard</Nav.Link></LinkContainer>
+                    <LinkContainer to='/play'><Nav.Link className='p-1'>Play Game</Nav.Link></LinkContainer>
                 </Nav>
 
 

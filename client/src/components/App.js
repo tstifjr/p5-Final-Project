@@ -57,12 +57,12 @@ function App() {
         <></>}
 
       <Switch>
-        <Route exact path="/" component={DefaultHome} />
-        <Route path ="/home" component= {Home} />
+        <Route exact path="/" component={Home} />
+        {/* <Route path ="/home" component= {Home} /> */}
         <Route path="/login"> <Login /> </Route>
         <Route path="/signup"> <Signup /> </Route>
         <Route path="/profile/:userId" component={Profile} />
-        <Route path="/boardmanager" component={EditBoard} />
+        {/* <Route path="/boardmanager" component={EditBoard} /> */}
         <Route path="/leaderboard" component={LeaderBoard} />
         <Route path="/about" component={About} />
         <Route path="/play" component={LetsPlay} />
