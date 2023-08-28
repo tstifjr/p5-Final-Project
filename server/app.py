@@ -166,7 +166,14 @@ class GameById(Resource):
 
 api.add_resource(GameById, '/games/<int:id>')
 
+class BoardById (Resource):
+    def get(self, id):
+        pass
 
+    def patch(self, id):
+        pass
+
+api.add_resource(BoardById, '/boards/<int:id>')
 ###Individual Views#########
 #Login view
 @app.route('/login', methods = ["POST"])

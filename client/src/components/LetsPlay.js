@@ -78,10 +78,6 @@ function LetsPlay() {
         setSquares(edited_copy)
     }
 
-    // function editAllSquares(randomRowArr, randomColArr) {
-
-    // }
-
     return (
         <>
             <Row>
