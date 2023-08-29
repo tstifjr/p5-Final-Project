@@ -253,26 +253,48 @@ def fill_board():
         dict_list.append(new_square.to_dict())
     return make_response(dict_list, 201)
 
-#srubs the games database from having assigned squares
-@app.route('/scrubgames', methods = ["DELETE"])
-def scrub_games():
+#scrubs everything
+@app.route('/scrubboard', methods = ['DELETE'])
+def scrub_board():
     for game in Game.query.all():
         game.square_id = None
     
     db.session.commit()
-    return make_response({}, 204)
+    games_all = [game.to_dict() for game in Game.query.all()]
 
+    for square in Square.query.all():
+        square.row_num = None
+        square.col_num = None
+    
+    db.session.commit()
+    squares_all = [square.to_dict() for square in Square.query.all()]
+
+    return make_response([squares_all, games_all])
+
+# #srubs the games database from having assigned squares
+# @app.route('/scrubgames', methods = ["PATCH"])
+# def scrub_games():
+#     for game in Game.query.all():
+#         game.square_id = None
+    
+#     db.session.commit()
+#     games_all = [game.to_dict() for game in Game.query.all()]
+#     return make_response(games_all)
+
+# #scrubs the squares col and row num
+# @app.route('/scrubsquares', methods = ["PATCH"])
+# def scrub_squares():
+#     for square in Square.query.all():
+#         square.row_num = None
+#         square.col_num = None
+    
+#     db.session.commit()
+#     squares_all = [square.to_dict() for square in Square.query.all()]
+#     return make_response(squares_all)
 
 #get Leaderboards
 @app.route('/leaderboard')
 def get_leaderboard():
-    # leader_list = db.session.query(User, db.func.count(Game.id).label('games_won')).join(User.squares).join(Square.games).group_by(User.id).order_by(db.desc('games_won')).all()
-    # res_dict_list = []
-    # for tuple in leader_list:
-    #     res_dict = tuple[0].to_dict(only=('username', 'id'))
-    #     res_dict['games_won'] = tuple[1]
-    #     res_dict_list.append(res_dict)
-    #     return make_response(res_dict_list)
     leaders = [user.to_dict(only = ('username', 'id', 'games_won')) for user in User.query.all()]
     is_sorted = sorted(leaders, key = lambda x : x['games_won'], reverse=True)
     return make_response(is_sorted)

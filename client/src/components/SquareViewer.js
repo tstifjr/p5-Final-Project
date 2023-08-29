@@ -10,14 +10,14 @@ function SquareViewer({ square, id }) {
     return (
         <>
             {square.user ?
-                <div className= "border" style={{width: "150px", height:"150px"}} onClick={handleView}>
-                    <header className='text-center'><p>{square?.user?.username}</p></header>
-
-                    {square.games.map((g) => <i key={g.id}>!@$</i>)}
-
+                <div className="border text-center p-3 align-items-center" style={{ width: "150px", height: "150px" }} onClick={handleView}>
+                    <div className='mt-5 text-center'>
+                        {square?.user?.username}
+                        {square.games.map((g) => <i key={g.id}>!@$</i>)}
+                    </div>
                 </div>
                 :
-                <div className= "border h-100" style={{width: "150px" }}>
+                <div className="border h-100" style={{ width: "150px" }}>
                 </div>
             }
 

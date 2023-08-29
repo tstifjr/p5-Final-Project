@@ -65,7 +65,7 @@ function SquareCard({ square, handleRemoveSq }) {
 
   return (
     <div className="border text-center p-3 align-items-center" style={{ width: "150px", height: '150px' }}>
-      <div className='p-2 text-center'>
+      <div className='mt-5 text-center'>
         {square?.user?.username}
         <div className='p-1'>
           {square.user_id === user.id && <Button onClick={handleRemoveSq}>Remove</Button>}
