@@ -31,9 +31,9 @@ function Home() {
         user ? <div className='App'>
             This is the Homepage
             <div>
-                <Container className='text-center'>
-                    <h2>ViewBoard</h2>
-                    {!edit ? <Button onClick={()=>setEdit(!edit)}>Edit Board</Button> : <Button onClick={()=>setEdit(!edit)}>View Board</Button>}
+                <Container className='text-center d-flex justify-content-between'>
+                    {!edit ? <h2>View Board</h2> : <h2>Edit Board</h2>}
+                    {!edit ? <Button className='justify-content-end' onClick={()=>setEdit(!edit)}>Edit Board</Button> : <Button className='justify-content-end' onClick={()=>setEdit(!edit)}>View Board</Button>}
                 </Container>
                 <Container className='overflow-auto' style={{ width: "1200px", height: "720px" }}>
                     <BoardUI squares = {squares} board = {board} edit = {edit} />
