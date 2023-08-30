@@ -76,12 +76,15 @@ if __name__ == "__main__":
         print("...seeding Users")
         u1 = User(username="tjstifter", password_hash = "qweqweqwe")
         u2 = User(username="tesj20", password_hash = "qazqazqaz")
-        u3 = User(username="user111", password_hash = "user1user")
-        u4 = User(username ="user222", password_hash = "user2user")
-        u5 = User(username ="basketwhiz", password_hash = "bball1")
-        u6 = User(username ="magicmoe", password_hash = "bball2")
-        u7 = User(username ="terpfan1", password_hash = "terp2win")
-        db.session.add_all([u1, u2, u3, u4, u5, u6, u7])
+        u3 = User(username="mgofan16", password_hash = "denard16")
+        u4 = User(username ="dukeispuke", password_hash = "umd123")
+        u5 = User(username ="basketwhiz", password_hash = "bball1x")
+        u6 = User(username ="magicmoe", password_hash = "bball2x")
+        u7 = User(username ="Eltigre", password_hash = "bball3x")
+        u8 = User(username ="WorstNameKeith", password_hash = "qweqweqwe")
+        u9 = User(username ="nostradamus", password_hash = "iknowall")
+        u10 = User(username ="terpfan1", password_hash = "terp2win")
+        db.session.add_all([u1, u2, u3, u4, u5, u6, u7, u8, u9, u10])
         db.session.commit()
 
         print('...Deleting Squares')
@@ -90,7 +93,7 @@ if __name__ == "__main__":
         rand_num_list = random.sample(range(0,100), 70)
         squares_list = []
         for i in range(0,70):
-            sq = Square(user_id = random.randint(1,7), board_pos = rand_num_list[i])
+            sq = Square(user_id = random.randint(1,10), board_pos = rand_num_list[i])
             squares_list.append(sq)
         
         db.session.add_all(squares_list)
@@ -101,17 +104,25 @@ if __name__ == "__main__":
         print("...seeding games")
         game_list = []
         
-        for i in range(1,41):
-            rand_round = random.choice([64, 32, 16, 8, 4, 2])
+        for i in range(1,64):
+            if i < 33 :
+                rand_round = 64
+            elif i < 49 :
+                rand_round = 32
+            elif i < 57 :
+                rand_round = 16
+            elif i < 61 :
+                rand_round = 8
+            elif i < 63 :
+                rand_round = 4
+            elif i == 63 :
+                rand_round = 2
             rand_teams = random.sample(team_list, 2)
-            
             at_half = half_sim()
             # rand_sq = random.choice(squares_list)
             # win_score = max([at_half.home_score, at_half.away_score])
             # lose_score = min([at_half.home_score, at_half.away_score])
-            
             # game1 = Game(round = rand_round, win_team = rand_teams[0], lose_team = rand_teams[1], square_id = rand_sq.id, win_score = win_score, lose_score = lose_score)
-            
             # game_list.append(game1)
             final = half_sim(at_half.home_score, at_half.away_score)
             rand_sq = random.choice(squares_list)
