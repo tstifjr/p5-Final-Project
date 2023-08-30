@@ -35,3 +35,4 @@ function initializeBoard(squaresArr) {
     return [board_layout, emptySquares]
 }
 export { patchItem, initializeBoard }
+

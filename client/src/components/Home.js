@@ -128,7 +128,7 @@ function Home() {
 
             </Container>
 
-            <Container className='position-end overflow-auto gx-0' style={{maxHeight:"77vh"}}>
+            <Container className='overflow-auto gx-0' style={{maxWidth:"90%", maxHeight:"77vh"}}>
                 <BoardUI squares={squares} board={board} edit={edit} />
             </Container>
         </div>
