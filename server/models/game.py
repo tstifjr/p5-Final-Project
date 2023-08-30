@@ -7,7 +7,7 @@ from config import db
 class Game(db.Model, SerializerMixin):
     __tablename__ = "games"
 
-    serialize_rules = ('-square.games', '-square.user')
+    serialize_rules = ('-square.games', '-square.user', 'user', '-user.games', '-user.squares')
 
     id = db.Column(db.Integer, primary_key=True)
     win_score = db.Column(db.Integer)

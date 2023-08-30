@@ -3,11 +3,9 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { useHistory, Link } from 'react-router-dom'
 
-import { Form, Button} from 'react-bootstrap'
+import { Form, Button } from 'react-bootstrap'
 
 function Signup() {
-    // const { user, setUser } = useContext(UserContext)
-    // console.log(user)
     const history = useHistory()
     const formSchema = yup.object().shape({
         username: yup.string().required("Must enter a Name").min(6),
@@ -30,7 +28,7 @@ function Signup() {
                         r.json().then(
                             new_user => {
                                 console.log(`welcome ${new_user}`)
-                                history.push('/')
+                                history.push('/login')
                             }
                         )
                     }
@@ -45,10 +43,12 @@ function Signup() {
 
             <div className='p-3 text-center fs-1'>Sign Up Page</div>
 
-            <Form className='text-center w-75 h-auto mt-3' onSubmit={formik.handleSubmit}>
-                <Form.Group className='p-2'>
-                    <Form.Label htmlFor='username'>Username: </Form.Label>
+            <div className='d-flex justify-content-center mt-5'>
+            <Form className='text-center h-auto mt-3' style={{ width: "33%" }} onSubmit={formik.handleSubmit}>
+                <Form.Group className='p-2 d-flex align-items-center flex-column'>
+                    <Form.Label htmlFor='username' className='fw-bold p-2'>Username: </Form.Label>
                     <Form.Control
+                        className=''
                         id='username'
                         type='text'
                         placeholder='...enter username'
@@ -60,9 +60,10 @@ function Signup() {
                         {formik.errors.username}
                     </Form.Text>
                 </Form.Group>
-                <Form.Group className='p-2'>
-                    <Form.Label htmlFor='password'> Password: </Form.Label>
+                <Form.Group className='p-2 d-flex align-items-center flex-column'>
+                    <Form.Label htmlFor='password' className='fw-bold p-2'> Password: </Form.Label>
                     <Form.Control
+                        className=''
                         placeholder='...password...'
                         id='password'
                         type='password'
@@ -79,6 +80,7 @@ function Signup() {
                 </Form.Group>
 
             </Form>
+            </div>
         </div>
     )
 }

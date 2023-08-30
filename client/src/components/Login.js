@@ -55,44 +55,47 @@ function Login() {
 
             <Link className="btn w-auto h-auto bg-secondary p-3 text-center fs-3" to='/signup'>Click Here To Signup</Link>
             <div className='p-3 text-center fs-1'>Login Page</div>
-            {message && <Alert className='alert-danger w-75'>{message['error']}</Alert>}
 
+            {message && <div style={{position:"absolute", top:"23%", left:"37%", width:"26%"}}><Alert className='alert-danger'>{message['error']}</Alert></div>}
 
+            <div className='d-flex justify-content-center mt-5'>
+                <Form className='text-center mt-3' style={{width:"33%"}} onSubmit={formik.handleSubmit}>
+                    <Form.Group className='p-2 d-flex align-items-center flex-column'>
+                        <Form.Label htmlFor='username' className='fw-bold p-2'>Username: </Form.Label>
+                        <Form.Control
+                            className=''
+                            id='username'
+                            type='text'
+                            placeholder='...enter username'
+                            required
+                            onChange={formik.handleChange}
+                            value={formik.values.username}
+                        />
+                        <Form.Text>
+                            {formik.errors.username}
+                        </Form.Text>
+                    </Form.Group>
+                    <Form.Group className='p-2 d-flex align-items-center flex-column'>
+                        <Form.Label htmlFor='password' className='fw-bold p-2'> Password: </Form.Label>
+                        <Form.Control
+                            className=''
+                            placeholder='...password...'
+                            id='password'
+                            type='password'
+                            required
+                            onChange={formik.handleChange}
+                            value={formik.values.password}
+                        />
+                        <Form.Text>
+                            {formik.errors.password}
+                        </Form.Text>
+                    </Form.Group>
+                    <Form.Group>
+                        <Button className='position-relative' type='submit'>Login</Button>
+                    </Form.Group>
 
-            <Form className='text-center w-75 h-auto mt-3' onSubmit={formik.handleSubmit}>
-                <Form.Group className='p-2'>
-                    <Form.Label htmlFor='username'>Username: </Form.Label>
-                    <Form.Control
-                        id='username'
-                        type='text'
-                        placeholder='...enter username'
-                        required
-                        onChange={formik.handleChange}
-                        value={formik.values.username}
-                    />
-                    <Form.Text>
-                        {formik.errors.username}
-                    </Form.Text>
-                </Form.Group>
-                <Form.Group className='p-2'>
-                    <Form.Label htmlFor='password'> Password: </Form.Label>
-                    <Form.Control
-                        placeholder='...password...'
-                        id='password'
-                        type='password'
-                        required
-                        onChange={formik.handleChange}
-                        value={formik.values.password}
-                    />
-                    <Form.Text>
-                        {formik.errors.password}
-                    </Form.Text>
-                </Form.Group>
-                <Form.Group>
-                    <Button className='position-relative' type='submit'>Login</Button>
-                </Form.Group>
-
-            </Form>
+                </Form>
+            </div>
         </div>
 
 

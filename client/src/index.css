@@ -1,25 +1,66 @@
-/* body {
+body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: rgb(0,94,184);
+  background: linear-gradient(254deg, rgba(0,94,184,1) 23%, rgba(238,103,48,1) 60%);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-} */
-
-.table .sticky {
-  position: sticky;
-  left: -15px;
-  margin-left: 0;
-  background-color: #ad6c80;
-  color: #373737;
 }
 
+#root {
+  /* background-color: rgb(32, 20, 138); */
+  height: 100vh;
+}
+
+.table {
+  background-color: aquamarine;
+}
+.table .sticky {
+  position: sticky;
+  left: -5px;
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.square-style {
+  width: 120px;
+  height: 120px;
+  font-size: 90%;
+  font-family:fantasy;
+}
+
+.square-highlight {
+  border-color: blue;
+  background-color: dodgerblue;
+}
+
+.table-container {
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: 400px;
+}
+
+.table-setter {
+  left: 200px;
+  top : 200px;
+}
+
+/* .table .margin {
+  top: -50px;
+  margin-right: -500x;
+} */
+/* .table-cell {
+  width: auto;
+  height: auto;
+  margin-bottom: 0;
+} */
 /* .table td {
   white-space: nowrap;
 } */
