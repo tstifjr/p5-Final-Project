@@ -39,8 +39,20 @@ class UserById(Resource):
         else:
             return make_response({"error" : "no user exists"}, 404)
 
-    # def patch(self, id):
-    #     pass
+    def patch(self, id):
+        user = User.query.filter_by(id=id).first()
+        data = request.get_json()
+        if not user :
+            return make_response({"error" : "no user exists"}, 404)
+        
+        try:
+            for attr in data:
+                setattr(user, attr, data[attr])
+        except Exception as e:
+            return make_response({"error" : f"invalid request: {str(e)} "}, 404)
+
+        db.session.commit()
+        return make_response(user.to_dict())
 
     # def delete(self, id):
     #     user = User.query.filter_by(id=id).first()
