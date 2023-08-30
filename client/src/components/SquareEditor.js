@@ -43,12 +43,13 @@ function SquareEditor({ pos, square }) {
 
   }
 
+
   return (
     <div>
       {square.user ?
           <SquareCard square={square} handleRemoveSq={handleRemoveSq}/>
         :
-        <div className="d-flex border text-center p-3 align-items-center" style={{ width: "150px", height: "150px" }}>
+        <div className="d-flex border text-center p-3 align-items-center border border-3 square-style">
           <div>
           <Button onClick={handleAddSq}>Add Square</Button>
           </div>
@@ -62,10 +63,12 @@ export default SquareEditor
 
 function SquareCard({ square, handleRemoveSq }) {
   const { user } = useContext(UserContext)
+  const highlight = 'border border-3 border-primary square-style'
+  const noHighlight = 'border border-3 square-style'
 
   return (
-    <div className="border text-center p-3 align-items-center" style={{ width: "150px", height: '150px' }}>
-      <div className='mt-5 text-center'>
+    <div className={user && user.id === square?.user.id ? highlight : noHighlight}>
+      <div className='mt-4 text-center'>
         {square?.user?.username}
         <div className='p-1'>
           {square.user_id === user.id && <Button onClick={handleRemoveSq}>Remove</Button>}

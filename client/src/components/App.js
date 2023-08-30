@@ -7,13 +7,12 @@ import NotFound from './NotFound';
 import Profile from './Profile';
 import { UserContext } from '../context/user';
 import NavHead from './NavHead';
-import EditBoard from './EditBoard'
 import LeaderBoard from './LeaderBoard';
-import DefaultHome from './DefaultHome'
 // import Button from 'react-bootstrap/Button'
 import About from './About';
 import LetsPlay from './LetsPlay';
-
+import GameViewer
+ from './GameViewer';
 function App() {
   const { user, setUser } = useContext(UserContext)
   const history = useHistory()
@@ -36,7 +35,7 @@ function App() {
         if (r.ok) {
           r.json().then(user => {
             setUser(user)
-            history.push('/')
+            // history.push('/')
           })
         }
         else {
@@ -66,6 +65,7 @@ function App() {
         <Route path="/leaderboard" component={LeaderBoard} />
         <Route path="/about" component={About} />
         <Route path="/play" component={LetsPlay} />
+        <Route path="/gameviewer" component={GameViewer} />
 
 
         <Route path="*"><NotFound /></Route>
