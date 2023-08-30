@@ -51,12 +51,10 @@ function Login() {
     }, [setMessage, message])
 
     return (
-        <div className='container mt-5 mx-auto row justify-content-center'>
-
-            <Link className="btn w-auto h-auto bg-secondary p-3 text-center fs-3" to='/signup'>Click Here To Signup</Link>
-            <div className='p-3 text-center fs-1'>Login Page</div>
-
-            {message && <div style={{position:"absolute", top:"23%", left:"37%", width:"26%"}}><Alert className='alert-danger'>{message['error']}</Alert></div>}
+        <div className='container mt-5 mx-auto row justify-content-center text-center'>
+            <h2 className='p-2 mb-5 fst-'>Welcome To NCAA Squares: Please Sign In</h2>
+            {/* <div className='p-3 text-center fs-1'>Login Page</div> */}
+            {message && <div style={{position:"absolute", top:"14%", left:"37%", width:"26%"}}><Alert className='alert-danger'>{message['error']}</Alert></div>}
 
             <div className='d-flex justify-content-center mt-5'>
                 <Form className='text-center mt-3' style={{width:"33%"}} onSubmit={formik.handleSubmit}>
@@ -96,6 +94,8 @@ function Login() {
 
                 </Form>
             </div>
+            <div className='mt-3'><h5>Don't Have an Account</h5></div>
+            <Link className="btn w-auto h-auto bg-secondary p-3 text-center fs-5 mt-3" to='/signup'>Click Here To Signup</Link>
         </div>
 
 

@@ -12,6 +12,7 @@ class User(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String)
     _password_hash = db.Column(db.String, nullable=False)
+    sq_border_color = db.Column(db.String)
 
     squares = db.relationship('Square', back_populates='user', cascade = "all, delete-orphan")
     _games = association_proxy('squares', 'games')

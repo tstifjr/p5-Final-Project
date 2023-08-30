@@ -40,7 +40,7 @@ function App() {
         }
         else {
           r.json().then(message => {
-            console.log(message)
+            // console.log(message)
             history.push("/login")
           })
         }

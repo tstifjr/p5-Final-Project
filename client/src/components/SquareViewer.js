@@ -13,14 +13,14 @@ function SquareViewer({ square, id }) {
         // console.log(square.user.id)
         history.push(`/profile/${square.user.id}`)
     }
-
-    const highlight = 'border border-3 border-primary square-style'
-    const noHighlight = 'border border-3 square-style'
-
+    console.log(user)
+    const highlight = user?.sq_border_color ? ` border-${user.sq_border_color}` : ' border-primary'
+    const defaultStyle = 'border border-3 square-style'
+    console.log(highlight)
     return (
         <>
             {square.user ?
-                <div className={user && user.id === square?.user.id ? highlight : noHighlight} onClick={handleView}>
+                <div className={user && user.id === square?.user.id ? defaultStyle + highlight : defaultStyle} onClick={handleView}>
                     <div className='mt-4 text-center d-flex flex-column'>
                         <Col className="">{square?.user?.username}</Col>
                 <Col>{square.games.map((g) => <span key={g.id}>{"🏀"}</span>)}</Col>

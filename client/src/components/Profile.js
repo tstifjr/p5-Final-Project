@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { UserContext } from '../context/user'
 import { useParams } from 'react-router-dom'
-import { Card, Container, Col, Row } from 'react-bootstrap'
+import { Card, Container, Col, Row, Button, Dropdown, DropdownButton } from 'react-bootstrap'
+import { patchItem } from '../globalFunctions'
 
 function Profile() {
   const { userId } = useParams();
@@ -27,15 +28,40 @@ function Profile() {
       </Col>)
   })
 
+  const editColor = (color) => {
+    //patch and edit user to have color set
+    const updateColor = { "sq_border_color": color }
+    patchItem(user, updateColor, `/users/${user.id}`)
+    setUser({ ...user, "sq_border_color": color })
+  }
+
   return (
     <Container className='text-center'>
+
       <Container fluid className='p-1'>
-        <Row className='mt-2 border font-monospace p-3 rounded-top bg-warning' ><h2>User : {viewedUser && viewedUser.username}</h2> </Row>
+
+        <Row className='mt-2 border font-monospace p-3 rounded-top bg-warning' >
+          <Col>
+            <h2>User : {viewedUser && viewedUser.username}</h2>
+            {user?.id === viewedUser?.id && 
+            <div className='d-flex justify-content-center' style={{}}>
+            {/* <Button variant='secondary'>Edit Profile</Button> */}
+            <span className='fw-bold mt-1 pe-2'>Square Border:</span> <DropdownButton size='sm' variant='secondary' title="Select Color">
+              <Dropdown.Item as="button" onClick={e => editColor(e.target.name)} name='primary'>Blue</Dropdown.Item>
+              <Dropdown.Item as="button" onClick={e => editColor(e.target.name)} name='danger'>Red</Dropdown.Item>
+              <Dropdown.Item as="button" onClick={e => editColor(e.target.name)} name='success'>Green</Dropdown.Item>
+              <Dropdown.Item as="button" onClick={e => editColor(e.target.name)} name='warning'>Gold</Dropdown.Item>
+              <Dropdown.Item as="button" onClick={e => editColor(e.target.name)} name='info'>Light Blue</Dropdown.Item>
+            </DropdownButton>
+          </div>
+          }
+          </Col>
+        </Row>
         <Row className='row-col-2 p-1 mb-3 bg-dark border rounded-bottom text-warning'>
           <Col className='p-3 mb-3 fs-3'> Squares Owned: {squareCardList?.length}</Col>
           {viewedUser?.games_won ?
-          <Col className='p-3 mb-3 fs-3'>Games Won: {viewedUser.games_won}</Col>
-          : <></>}
+            <Col className='p-3 mb-3 fs-3'>Games Won: {viewedUser.games_won}</Col>
+            : <></>}
         </Row>
       </Container>
 

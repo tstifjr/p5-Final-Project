@@ -37,12 +37,8 @@ function Signup() {
         },
     });
     return (
-        <div className='container mt-5 mx-auto row justify-content-center'>
-
-            <Link className="btn w-auto h-auto bg-secondary p-3 text-center fs-3" to='/login'>Click Here To Login</Link>
-
-            <div className='p-3 text-center fs-1'>Sign Up Page</div>
-
+        <div className='container mt-5 mx-auto row justify-content-center text-center'>
+            <h2 className='p-2 mb-5'>Welcome To NCAA Squares: Please Sign Up</h2>
             <div className='d-flex justify-content-center mt-5'>
             <Form className='text-center h-auto mt-3' style={{ width: "33%" }} onSubmit={formik.handleSubmit}>
                 <Form.Group className='p-2 d-flex align-items-center flex-column'>
@@ -76,11 +72,13 @@ function Signup() {
                     </Form.Text>
                 </Form.Group>
                 <Form.Group>
-                    <Button className='position-relative' type='submit'>Login</Button>
+                    <Button className='position-relative' type='submit'>Submit</Button>
                 </Form.Group>
 
             </Form>
             </div>
+            <div className='mt-3'><h5>Already Have an Account</h5></div>
+            <Link className="btn w-auto h-auto bg-secondary p-3 text-center fs-5 mt-3" to='/login'>Click Here To Login</Link>
         </div>
     )
 }
