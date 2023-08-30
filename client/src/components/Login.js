@@ -69,7 +69,7 @@ function Login() {
                             onChange={formik.handleChange}
                             value={formik.values.username}
                         />
-                        <Form.Text>
+                        <Form.Text className='fw-bold'>
                             {formik.errors.username}
                         </Form.Text>
                     </Form.Group>
@@ -84,18 +84,18 @@ function Login() {
                             onChange={formik.handleChange}
                             value={formik.values.password}
                         />
-                        <Form.Text>
+                        <Form.Text className='fw-bold'>
                             {formik.errors.password}
                         </Form.Text>
                     </Form.Group>
                     <Form.Group>
-                        <Button className='position-relative' type='submit'>Login</Button>
+                        <Button className='position-relative w-50' type='submit'>Login</Button>
                     </Form.Group>
 
                 </Form>
             </div>
             <div className='mt-3'><h5>Don't Have an Account</h5></div>
-            <Link className="btn w-auto h-auto bg-secondary p-3 text-center fs-5 mt-3" to='/signup'>Click Here To Signup</Link>
+            <Link className="btn w-auto h-auto bg-primary text-light p-3 text-center fs-5 mt-3" to='/signup'>Click Here To Signup</Link>
         </div>
 
 

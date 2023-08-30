@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react'
 import { Row, Button, Container, Table, ButtonGroup, Card, Col, Carousel } from 'react-bootstrap'
 import { SquaresContext } from '../context/squares';
 import { patchItem } from '../globalFunctions';
+import BoardUI from './BoardUI'
 
 function GameViewer() {
     const [board, setBoard] = useState(null)
@@ -63,23 +64,29 @@ function GameViewer() {
     // console.log(board)
 
     return (
-        <Container className='text-center' fluid>
-            {/* <h1>View The Games Here</h1>
+        <>
+            <Container className='text-center' fluid>
+                {/* <h1>View The Games Here</h1>
             <Row>{completedGames.map((game,i) => <Col key={game.id}>Game {i}</Col>)}</Row> */}
-            <Container>
-                <h1 style={{position:"relative", top:"50px"}}>Game Scores & Winners</h1>
-                {completedGames && <GameCardList games={completedGames} />}
-            </Container>
-            
-            {(!board || !board?.colnums) ? <p>Please Fill Out Board to See Next Game</p> :
-                <Button className='btn-danger p-3 mb-3' onClick={handleGameCreate}>CLick To See The Next Game</Button>
-            }
-            <Container className='d-flex justify-content-center mt-2'>
+                <Container>
+                    <h1 style={{ position: "relative", top: "50px" }}>Game Scores & Winners</h1>
+                    {completedGames && <GameCardList games={completedGames} />}
+                </Container>
 
-                {nextGame?.user?.username && <GameCard game={nextGame} />}
+                {(!board || !board?.colnums) ? <p className='text-warning fw-bold'>Please Fill Out Board to See Next Game</p> :
+                    <Button className='btn-danger p-3 mb-3' onClick={handleGameCreate}>CLick To See The Next Game</Button>
+                }
+                <Container className='d-flex justify-content-center mt-2'>
+
+                    {nextGame?.user?.username && <GameCard game={nextGame} />}
+                </Container>
+
             </Container>
 
-        </Container>
+            <Container className='position-end overflow-auto gx-0' style={{ maxHeight: "77vh" }}>
+                <BoardUI squares={squares} board={board}/>
+            </Container>
+        </>
     )
 }
 
@@ -89,7 +96,7 @@ function GameCard({ game }) {
     // console.log(game)
     return (
         <div className='d-flex justify-content-center'>
-            <Card className='text-center pt-2 shadow-md' style={{ width:"600px", maxHeight: "300px" }}>
+            <Card className='text-center pt-2 shadow-md' style={{ width: "600px", maxHeight: "300px" }}>
                 <Card.Title>{game?.win_team}: {game?.win_score} vs {game?.lose_team}: {game?.lose_score}</Card.Title>
                 <Card.Header>Round of {game?.round}</Card.Header>
                 <Card.Body className='text-uppercase fw-bolder'>{`Winner is ${game?.user?.username}`}</Card.Body>
@@ -105,13 +112,13 @@ function GameCardList({ games }) {
     const cardPack = games && games.map(game => <Carousel.Item key={game.id}><GameCard game={game} key={game.id} /> </Carousel.Item>)
     return (
         <>
-            <Carousel className="d-flex align-items-center w-100" 
-            data-bs-theme="dark" 
-            style={{ width: "900px", height: "300px" }} 
-            controls={false} 
-            indicators={false}
-            pause={false}
-            ineterval={3000}>
+            <Carousel className="d-flex align-items-center w-100"
+                data-bs-theme="dark"
+                style={{ width: "900px", height: "300px" }}
+                controls={false}
+                indicators={false}
+                pause={false}
+                ineterval={3000}>
                 {cardPack}
             </Carousel>
         </>
