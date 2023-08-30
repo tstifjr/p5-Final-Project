@@ -34,9 +34,10 @@ function LeaderBoard() {
   const keyedLeaders = React.Children.toArray(leaders)
 
   return (
-    <>
+    <div className=''>
       {keyedLeaders && <DisplayComponent keyedLeaders={keyedLeaders} />}
-    </>
+      {/* <footer style={{height:"20px"}}></footer> */}
+    </div>
   )
 }
 

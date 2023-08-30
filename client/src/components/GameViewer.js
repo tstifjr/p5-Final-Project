@@ -60,7 +60,7 @@ function GameViewer() {
     }
     // console.log(nextGame)
     const completedGames = games && games.filter((game) => game.id <= cnt)
-    console.log(board)
+    // console.log(board)
 
     return (
         <Container className='text-center' fluid>

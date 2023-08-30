@@ -13,10 +13,10 @@ function SquareViewer({ square, id }) {
         // console.log(square.user.id)
         history.push(`/profile/${square.user.id}`)
     }
-    console.log(user)
+    // console.log(user)
     const highlight = user?.sq_border_color ? ` border-${user.sq_border_color}` : ' border-primary'
     const defaultStyle = 'border border-3 square-style'
-    console.log(highlight)
+    // console.log(highlight)
     return (
         <>
             {square.user ?
