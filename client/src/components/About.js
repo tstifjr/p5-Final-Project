@@ -2,8 +2,8 @@ import React from 'react'
 
 function About() {
   return (
-    <div className='container fs-4 text-warning' style={{marginTop:"10%"}}>
-      <h2 className='text-center text-light'><u>Introduction</u></h2>
+    <div className='container fs-4 text-warning' style={{marginTop:"8%"}}>
+      <h2 className='text-center text-light mb-1'><u>Introduction</u></h2>
       <p className='mt-2'>Hello, NCAA Squares is a game designed to be played during March Madness.  The game consists of a board 10x10, where all the players select squares for themselves, and as individual basketball games are finished the final score is used to determine  a winner</p>
       <h2 className='text-center text-light mb-2'><u>How to Play</u></h2>
       <p> As a logged in user, you can select any square not already owned and add it to your profile.  This is done by pressing the edit board button.  </p>

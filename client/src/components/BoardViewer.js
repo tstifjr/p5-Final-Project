@@ -5,7 +5,7 @@ import { SquaresContext } from '../context/squares';
 import BoardUI from './BoardUI'
 import { Container, Button, ButtonGroup } from 'react-bootstrap'
 import { patchItem, initializeBoard } from '../globalFunctions'
-function Home() {
+function BoardViewer() {
     const { user, setUser } = useContext(UserContext)
     const { squares, setSquares } = useContext(SquaresContext)
     const [board, setBoard] = useState(null)
@@ -112,15 +112,15 @@ function Home() {
 
     return (
         user ? <div>
-            <Container className='text-center d-flex justify-content-between mt-5 pb-3'>
-                <ButtonGroup>
+            <Container className='text-center d-flex justify-content-between mt-5 pb-3' style={{marginLeft:"5%", maxWidth:"93%"}}>
+                <ButtonGroup className='me-5'>
                     {!locked ? <Button className='btn-success' onClick={() => setLocked(!locked)}>Lock Board</Button> : <Button className='btn-danger' onClick={() => setLocked(!locked)}>Unlock</Button>}
                     {!locked && !board?.colnums && (!edit ? <Button className='justify-content-end' onClick={() => setEdit(!edit)}>Edit Board</Button> : <Button className='justify-content-end' onClick={() => setEdit(!edit)}>View Board</Button>)}
                     <Button className='btn-danger' onClick={handleClearBoard} disabled={!squares?.length}>Clear Board</Button>
                 </ButtonGroup>
 
                 {locked &&
-                    <ButtonGroup>
+                    <ButtonGroup className='ms-5 me-5'>
                         <Button className='btn-info' onClick={handleFillBoard} disabled={squares?.length === 100}>Fill Board</Button>
                         <Button className='btn-success' onClick={assignSquares} disabled={squares?.length !== 100 || board?.colnums}>Assign Numbers To Board</Button>
                         <Button className='btn-warning' onClick={handleResetBoard} disabled={!board || !board?.colnums} >ResetBoard</Button>
@@ -138,7 +138,7 @@ function Home() {
     )
 }
 
-export default Home
+export default BoardViewer
 
 
 function genRandNums() {

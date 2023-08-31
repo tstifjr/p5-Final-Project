@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { Route, Switch, useHistory } from 'react-router-dom'
 import Login from './Login'
-import Home from './Home'
+import BoardViewer from './BoardViewer';
 import Signup from './Signup';
 import NotFound from './NotFound';
 import Profile from './Profile';
@@ -56,16 +56,15 @@ function App() {
         <></>}
 
       <Switch>
-        <Route exact path="/" component={Home} />
-        {/* <Route path ="/home" component= {Home} /> */}
+        <Route exact path="/" component={GameViewer} />
         <Route path="/login"> <Login /> </Route>
         <Route path="/signup"> <Signup /> </Route>
         <Route path="/profile/:userId" component={Profile} />
-        {/* <Route path="/boardmanager" component={EditBoard} /> */}
         <Route path="/leaderboard" component={LeaderBoard} />
         <Route path="/about" component={About} />
         <Route path="/play" component={LetsPlay} />
-        <Route path="/gameviewer" component={GameViewer} />
+        {/* <Route path="/gameviewer" component={GameViewer} /> */}
+        <Route path="/boardsetup" component={BoardViewer} />
 
 
         <Route path="*"><NotFound /></Route>

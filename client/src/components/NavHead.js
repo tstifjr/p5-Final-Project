@@ -11,29 +11,28 @@ function NavHead({ handleLogout }) {
     // console.log(user)
     return (
         <Navbar collapseOnSelect expand='lg' className="bg-body-secondary">
-            <Navbar.Brand className='ms-3' style={{fontFamily:"fantasy"}}>NCAAB Squares </Navbar.Brand>
+            <Navbar.Brand className='ms-3' style={{ fontFamily: "fantasy" }}>NCAAB Squares </Navbar.Brand>
 
             <Navbar.Toggle aria-controls='basic-navbar-nav' />
 
             <Navbar.Collapse id="basic-navbar-nav" >
                 <Nav className='container w-50'>
-                    <Navbar.Text className='fs-4 text-danger' style={{fontFamily:"fantasy"}}>Welcome, {user && user.username}</Navbar.Text>
+                    <Navbar.Text className='fs-4 text-danger' style={{ fontFamily: "fantasy" }}>Welcome, {user && user.username}</Navbar.Text>
                 </Nav>
 
 
-                <Nav className='container justify-content-start' style={{fontFamily:"monospace"}}>
-                    <LinkContainer to='/'><Nav.Link className='p-1'>Home</Nav.Link></LinkContainer>
-                    <LinkContainer to='/about'><Nav.Link className='p-1'>About</Nav.Link></LinkContainer>
-                    {/* <LinkContainer to='/boardManager'><Nav.Link className='p-1'>Edit Board</Nav.Link></LinkContainer> */}
-                    <LinkContainer to={`/profile/${user.id}`}><Nav.Link className='p-1'>View Profile</Nav.Link></LinkContainer>
-                    <LinkContainer to='/leaderboard'><Nav.Link className='p-1'>LeaderBoard</Nav.Link></LinkContainer>
-                    <LinkContainer to='/gameviewer'><Nav.Link className='p-1'>View Games</Nav.Link></LinkContainer>
+                <Nav className='container justify-content-start' style={{ fontFamily: "monospace" }}>
+                    <LinkContainer to='/'><Nav.Link className='p-1 me-1'>Home</Nav.Link></LinkContainer>
+                    <LinkContainer to='/boardsetup'><Nav.Link className='p-1 me-1'>Setup Board</Nav.Link></LinkContainer>
+                    <LinkContainer to={`/profile/${user.id}`}><Nav.Link className='p-1 me-1'>View Profile</Nav.Link></LinkContainer>
+                    <LinkContainer to='/leaderboard'><Nav.Link className='p-1 me-1'>LeaderBoard</Nav.Link></LinkContainer>
+                    <LinkContainer to='/about'><Nav.Link className='p-1 me-1'>About</Nav.Link></LinkContainer>
                 </Nav>
 
 
             </ Navbar.Collapse>
 
-            <Button className='btn-info me-2 justify-content-end' onClick={handleLogout}>LogOut</Button>
+            <Button className='btn-danger me-3 justify-content-end' onClick={handleLogout}>LogOut</Button>
 
 
 

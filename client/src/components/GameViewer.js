@@ -76,24 +76,25 @@ function GameViewer() {
 
     return (
         <>
-            <Container className='d-flex' fluid>
-                <Col lg={5}>
-                    <Container className='text-center text-light' fluid>
-                        <Container>
-                            <h1 style={{ position: "relative", top: "50px" }}>Game Scores & Winners</h1>
+            <Container className='d-flex mt-4' fluid>
+                <Col lg={5} className='mt-3'>
+                    <Container className='text-center text-warning' fluid>
+                        <Container className=''>
+                            <h1 style={{ position: "relative"}}><u>Game Scores & Winners</u></h1>
                             {completedGames && <GameCardList games={completedGames} />}
                         </Container>
 
                         <Container className='d-flex justify-content-center mt-2' style={{ minHeight: "150px" }}>
 
-                            {nextGame?.user?.username && <GameCard game={nextGame} />}
+                            {nextGame?.user?.username ? <GameCard game={nextGame} /> : <p className='text-warning fw-bold'>Please Fill Out Board to Begin Game</p>}
                         </Container>
-                        {(!board || !board?.colnums) ? <p className='text-warning fw-bold'>Please Fill Out Board to See Next Game</p> :
+                        {(!board || !board?.colnums) ? <p></p> :
                             <Button className='btn-danger p-3 mt-3 mb-2' onClick={handleGameCreate}>CLick To See The Next Game</Button>
                         }
                     </Container>
                 </Col>
-                <Col lg={7} className='mt-3'>
+                <Col lg={7} className='mt-3 text-center text-warning'>
+                    <h1 className="mb-3" style={{ position: "relative" }}><u>THE BOARD</u></h1>
                     <Container className='position-end overflow-auto gx-0' style={{ width: "900px", height: "600px" }}>
                         <BoardUI squares={squares} board={board} />
                     </Container>
