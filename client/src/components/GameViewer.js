@@ -65,7 +65,7 @@ function GameViewer() {
 
     return (
         <>
-            <Container className='text-center' fluid>
+            <Container className='text-center text-danger' fluid>
                 {/* <h1>View The Games Here</h1>
             <Row>{completedGames.map((game,i) => <Col key={game.id}>Game {i}</Col>)}</Row> */}
                 <Container>

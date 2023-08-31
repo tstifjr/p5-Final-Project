@@ -37,7 +37,7 @@ function Signup() {
         },
     });
     return (
-        <div className='container mt-5 mx-auto row justify-content-center text-center'>
+        <div className='container mt-5 mx-auto row justify-content-center text-center text-light'>
             <h2 className='p-2 mb-5'>Welcome To NCAA Squares: Please Sign Up</h2>
             <div className='d-flex justify-content-center mt-5'>
             <Form className='text-center h-auto mt-3' style={{ width: "33%" }} onSubmit={formik.handleSubmit}>

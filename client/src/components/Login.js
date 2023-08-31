@@ -51,7 +51,7 @@ function Login() {
     }, [setMessage, message])
 
     return (
-        <div className='container mt-5 mx-auto row justify-content-center text-center'>
+        <div className='container mt-5 mx-auto row justify-content-center text-center text-light'>
             <h2 className='p-2 mb-5 fst-'>Welcome To NCAA Squares: Please Sign In</h2>
             {/* <div className='p-3 text-center fs-1'>Login Page</div> */}
             {message && <div style={{position:"absolute", top:"14%", left:"37%", width:"26%"}}><Alert className='alert-danger'>{message['error']}</Alert></div>}
