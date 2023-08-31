@@ -3,8 +3,10 @@ import { Row, Button, Container, Table, ButtonGroup, Card, Col, Carousel } from 
 import { SquaresContext } from '../context/squares';
 import { patchItem } from '../globalFunctions';
 import BoardUI from './BoardUI'
+import { UserContext } from '../context/user'
 
 function GameViewer() {
+    const { user, setUser } = useContext(UserContext)
     const [board, setBoard] = useState(null)
     const [games, setGames] = useState([])
     const [cnt, setCnt] = useState(0)
@@ -75,12 +77,12 @@ function GameViewer() {
     // console.log(board)
 
     return (
-        <>
+        user ? <div>
             <Container className='d-flex mt-4' fluid>
                 <Col lg={5} className='mt-3'>
                     <Container className='text-center text-warning' fluid>
                         <Container className=''>
-                            <h1 style={{ position: "relative"}}><u>Game Scores & Winners</u></h1>
+                            <h1 style={{ position: "relative" }}><u>Game Scores & Winners</u></h1>
                             {completedGames && <GameCardList games={completedGames} />}
                         </Container>
 
@@ -100,7 +102,10 @@ function GameViewer() {
                     </Container>
                 </Col>
             </Container>
-        </>
+        </div>
+            :
+
+            <div></div>
     )
 }
 

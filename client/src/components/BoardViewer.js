@@ -5,6 +5,7 @@ import { SquaresContext } from '../context/squares';
 import BoardUI from './BoardUI'
 import { Container, Button, ButtonGroup } from 'react-bootstrap'
 import { patchItem, initializeBoard } from '../globalFunctions'
+
 function BoardViewer() {
     const { user, setUser } = useContext(UserContext)
     const { squares, setSquares } = useContext(SquaresContext)
