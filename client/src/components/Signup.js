@@ -42,7 +42,7 @@ function Signup() {
             <div className='d-flex justify-content-center mt-5'>
             <Form className='text-center h-auto mt-3' style={{ width: "33%" }} onSubmit={formik.handleSubmit}>
                 <Form.Group className='p-2 d-flex align-items-center flex-column'>
-                    <Form.Label htmlFor='username' className='fw-bold p-2'>Username: </Form.Label>
+                    <Form.Label htmlFor='username' className='fw-bold p-2 fs-4'>Username: </Form.Label>
                     <Form.Control
                         className=''
                         id='username'
@@ -52,12 +52,12 @@ function Signup() {
                         onChange={formik.handleChange}
                         value={formik.values.username}
                     />
-                    <Form.Text className="fw-bold">
+                    <Form.Text className="fw-bold text-light">
                         {formik.errors.username}
                     </Form.Text>
                 </Form.Group>
                 <Form.Group className='p-2 d-flex align-items-center flex-column'>
-                    <Form.Label htmlFor='password' className='fw-bold p-2'> Password: </Form.Label>
+                    <Form.Label htmlFor='password' className='fw-bold p-2 fs-4'> Password: </Form.Label>
                     <Form.Control
                         className=''
                         placeholder='...password...'
@@ -67,7 +67,7 @@ function Signup() {
                         onChange={formik.handleChange}
                         value={formik.values.password}
                     />
-                    <Form.Text className='fw-bold'>
+                    <Form.Text className='fw-bold text-light'>
                         {formik.errors.password}
                     </Form.Text>
                 </Form.Group>
