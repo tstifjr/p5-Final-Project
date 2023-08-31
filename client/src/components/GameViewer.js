@@ -23,6 +23,17 @@ function GameViewer() {
                 setCnt(b['game_cnt'])
             })
 
+        if (!squares) {
+            fetch('/squares').then(r => {
+                if (r.ok) {
+                    r.json()
+                        .then(data => {
+                            setSquares(data)
+                        })
+                }
+            })
+        }
+
     }, [setGames])
 
 
@@ -65,26 +76,28 @@ function GameViewer() {
 
     return (
         <>
-            <Container className='text-center text-danger' fluid>
-                {/* <h1>View The Games Here</h1>
-            <Row>{completedGames.map((game,i) => <Col key={game.id}>Game {i}</Col>)}</Row> */}
-                <Container>
-                    <h1 style={{ position: "relative", top: "50px" }}>Game Scores & Winners</h1>
-                    {completedGames && <GameCardList games={completedGames} />}
-                </Container>
+            <Container className='d-flex' fluid>
+                <Col lg={5}>
+                    <Container className='text-center text-light' fluid>
+                        <Container>
+                            <h1 style={{ position: "relative", top: "50px" }}>Game Scores & Winners</h1>
+                            {completedGames && <GameCardList games={completedGames} />}
+                        </Container>
 
-                {(!board || !board?.colnums) ? <p className='text-warning fw-bold'>Please Fill Out Board to See Next Game</p> :
-                    <Button className='btn-danger p-3 mb-3' onClick={handleGameCreate}>CLick To See The Next Game</Button>
-                }
-                <Container className='d-flex justify-content-center mt-2'>
+                        <Container className='d-flex justify-content-center mt-2' style={{ minHeight: "150px" }}>
 
-                    {nextGame?.user?.username && <GameCard game={nextGame} />}
-                </Container>
-
-            </Container>
-
-            <Container className='position-end overflow-auto gx-0' style={{ maxHeight: "77vh" }}>
-                <BoardUI squares={squares} board={board}/>
+                            {nextGame?.user?.username && <GameCard game={nextGame} />}
+                        </Container>
+                        {(!board || !board?.colnums) ? <p className='text-warning fw-bold'>Please Fill Out Board to See Next Game</p> :
+                            <Button className='btn-danger p-3 mt-3 mb-2' onClick={handleGameCreate}>CLick To See The Next Game</Button>
+                        }
+                    </Container>
+                </Col>
+                <Col lg={7} className='mt-3'>
+                    <Container className='position-end overflow-auto gx-0' style={{ width: "900px", height: "600px" }}>
+                        <BoardUI squares={squares} board={board} />
+                    </Container>
+                </Col>
             </Container>
         </>
     )

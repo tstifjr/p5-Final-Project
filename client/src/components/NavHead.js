@@ -17,7 +17,7 @@ function NavHead({ handleLogout }) {
 
             <Navbar.Collapse id="basic-navbar-nav" >
                 <Nav className='container w-50'>
-                    <Navbar.Text className='fs-4' style={{fontFamily:"fantasy"}}>Welcome, {user && user.username}</Navbar.Text>
+                    <Navbar.Text className='fs-4 text-danger' style={{fontFamily:"fantasy"}}>Welcome, {user && user.username}</Navbar.Text>
                 </Nav>
 
 

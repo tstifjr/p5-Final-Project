@@ -20,8 +20,8 @@ body {
 .table .sticky {
   position: sticky;
   left: -5px;
-  background-color: #000000;
-  color: #c50909;
+  background-color: rgb(33, 37, 41);
+  color: white
 }
 
 .square-style {
